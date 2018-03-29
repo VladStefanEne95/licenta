@@ -1,19 +1,22 @@
+
+
+
+
 <nav class="navbar navbar-inverse">
         <div class="container">
             <div class="navbar-header">
-    
-                <!-- Collapsed Hamburger -->
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
     
-                <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
+                            <button type="button" id="sidebarCollapse" class="navbar-btn">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </button>
             </div>
     
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -36,7 +39,7 @@
                         <li><a href="{{ route('register') }}">Register</a></li>
                     @else
                     <li class="dropdown">
-                        <a  href="#" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a  href="#" class="dropdown-toggle no-icon-top"  data-toggle="dropdown" role="button" aria-expanded="false">
                             Clock in <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
@@ -57,7 +60,7 @@
 
 
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <a href="#" class="dropdown-toggle no-icon-top" data-toggle="dropdown" role="button" aria-expanded="false">
                                 {{ Auth::user()->name }} <span class="caret"></span>
                             </a>
     

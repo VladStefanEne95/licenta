@@ -23,8 +23,20 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add-pause', 'WorkTimeController@addPause');
 Route::get('/start-work-time', 'WorkTimeController@startWorkTime');
 Route::get('/add-new-work-time', 'WorkTimeController@addNewWorkTime');
+
+Route::get('/tasks/{id}/start-task-time', 'TaskTimeController@startTaskTime');
+Route::get('/tasks/{id}/update-task-time', 'TaskTimeController@updateTaskTime');
+
 Route::get('/get-time-data', 'GetTimeDataController@getData');
+
 Route::resource('tasks', 'TaskController');
+Route::get('/tasks/{id}/updateChecklist', 'TaskController@updateChecklist');
+Route::resource('positions', 'PositionController');
+Route::resource('departaments', 'DepartamentController');
+Route::post('tasks/{id}/addComment', 'TaskController@addComment');
+Route::post('positions/{id}/changeName', 'PositionController@changeName');
+Route::post('departaments/{id}/changeName', 'DepartamentController@changeName');
+
 
 Route::get('/chat', function () {
     return view('chat');

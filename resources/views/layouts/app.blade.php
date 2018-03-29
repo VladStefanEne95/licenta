@@ -8,25 +8,50 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
-    <script src="/js/timer.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+      <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+  <script>tinymce.init({ selector:'textarea',plugins: 'print preview fullpage powerpaste searchreplace autolink directionality advcode visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists textcolor wordcount tinymcespellchecker a11ychecker imagetools mediaembed  linkchecker contextmenu colorpicker textpattern help',
+  toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify  | numlist bullist outdent indent  | removeformat', });</script>
     <title>{{ config('app.name', 'Laravel') }}</title>
 
  <!-- Compiled and minified CSS -->
  <link rel="stylesheet" href="/css/app.css">
+ <link href="/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="/css/sb-admin.css" rel="stylesheet">
+  <link href="/css/main.css" rel="stylesheet" type="text/css">
         
 </head>
 <body>
         <div id="app">
-                @include('inc.navbar')
-                <div class="container">
-                    @include('inc.messages')
-                    @yield('content')
+            <div class="wrapper">
+                @include('inc.sidebar')
+                <div id="content"> 
+                        @include('inc.navbar')
+                        <div id="no-nav-content">
+                        @include('inc.messages')
+                        @yield('content')
                 </div>
+            </div>
+                
+            </div>
         </div>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="/js/autocomplete.js"></script>
+    <script src="/js/timer.js"></script>
+    <script src="/js/general.js"></script>
+    @stack('scripts')
+    <script>
+$(document).ready(function () {
+    $('#sidebarCollapse').on('click', function () {
+        $('#sidebar').toggleClass('active');
+        $(this).toggleClass('active');
+    });
+});
+    </script>
 </body>
 </html>

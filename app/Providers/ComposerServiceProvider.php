@@ -17,6 +17,11 @@ class ComposerServiceProvider extends ServiceProvider
             '*',
             'App\Http\ViewComposers\WorkTimeComposer'
         );
+
+        view()->composer(
+            '*',
+            'App\Http\ViewComposers\UserComposer'
+        );
     }
 
     /**

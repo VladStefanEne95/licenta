@@ -17,7 +17,7 @@ class WorkTimeComposer
         $timer_null->clocked_time = 0;
         if(Auth::user()) {
             $timer = DB::table('worktime')->where('user_id', Auth::user()->id)->orderBy('id', 'desc')->first();
-            
+        
             if ($timer->clocked_out == 0) {
                 if ($timer->pause == 0) {
                     $ts1 = strtotime(Carbon::now());

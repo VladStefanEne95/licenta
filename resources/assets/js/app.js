@@ -17,12 +17,16 @@ window.Vue = require('vue');
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('chat-message', require('./components/ChatMessage.vue'));
 Vue.component('chat-log', require('./components/ChatLog.vue'));
+Vue.component('comment-log', require('./components/CommentLog.vue'));
+Vue.component('comment-message', require('./components/CommentMessage.vue'));
+Vue.component('comment-composer', require('./components/CommentComposer.vue'));
 Vue.component('chat-composer', require('./components/ChatComposer.vue'));
 const app = new Vue({
     el: '#app',
     data: {
         messages: [],
-        usersInRoom: []
+        usersInRoom: [],
+        comments: []
     },
     methods: {
         addMessage(message) {
@@ -33,6 +37,15 @@ const app = new Vue({
             axios.post('/messages', message).then(response => {
                 // Do whatever;
             })
+        },
+        addComments(comment) {
+            // Add to existing messages
+            this.comments.push(comment);
+            console.log(comment);
+            // Persist to the database etc
+        //    axios.post('/messages', message).then(response => {
+                // Do whatever;
+          //  })
         }
     },
     created() {
