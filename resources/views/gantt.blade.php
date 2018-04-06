@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<head>
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
- 
-    <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
-    <link href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css" rel="stylesheet">
- 
-    <style type="text/css">
-        html, body{
-            height:100%;
-            padding:0px;
-            margin:0px;
-            overflow: hidden;
-        }
+@extends('layouts.app')
+@section('content')
+<div id="gantt_here" style='width:100%; height:600px;'></div>
+@endsection
 
-    </style>
-</head>
-<body>
-<div id="gantt_here" style='width:100%; height:100%;'></div>
+@push('scripts')
 <script type="text/javascript">
 gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 gantt.config.order_branch = true;
@@ -30,4 +17,4 @@ var dp = new gantt.dataProcessor("/api");
 dp.init(gantt);
 dp.setTransactionMode("REST");
 </script>
-</body>
+@endpush

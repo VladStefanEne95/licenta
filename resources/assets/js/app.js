@@ -17,9 +17,6 @@ window.Vue = require('vue');
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('chat-message', require('./components/ChatMessage.vue'));
 Vue.component('chat-log', require('./components/ChatLog.vue'));
-Vue.component('comment-log', require('./components/CommentLog.vue'));
-Vue.component('comment-message', require('./components/CommentMessage.vue'));
-Vue.component('comment-composer', require('./components/CommentComposer.vue'));
 Vue.component('chat-composer', require('./components/ChatComposer.vue'));
 const app = new Vue({
     el: '#app',
@@ -32,24 +29,16 @@ const app = new Vue({
         addMessage(message) {
             // Add to existing messages
             this.messages.push(message);
-
+            let url = '/messages/' + (window.location.href).split("/").pop();
             // Persist to the database etc
-            axios.post('/messages', message).then(response => {
-                // Do whatever;
+            axios.post(url, message).then(response => {
+                
             })
-        },
-        addComments(comment) {
-            // Add to existing messages
-            this.comments.push(comment);
-            console.log(comment);
-            // Persist to the database etc
-        //    axios.post('/messages', message).then(response => {
-                // Do whatever;
-          //  })
         }
     },
     created() {
-        axios.get('/messages').then(response => {
+        let url = '/messages/' + (window.location.href).split("/").pop();
+        axios.get(url).then(response => {
             this.messages = response.data;
         });
 

@@ -20,9 +20,9 @@
                             Chat
                         </a>
                         <ul class="collapse list-unstyled" id="pageSubmenu">
-                            <li><a href="#">Chat with</a></li>
-                            <li><a href="#">Chat with</a></li>
-                            <li><a href="#">Chat with</a></li>
+                            <li><a href="/chat/users">Users</a></li>
+                            <li><a href="/chat/groups">Groups</a></li>
+                            <li><a href="/chat/projects">Projects</a></li>
                         </ul>
                     </li>
                     <li>
@@ -49,6 +49,14 @@
                             Create task
                         </a>
                     </li>
-                    
                 </ul>
+                @if (Auth::user()->id == 1)
+                    <ul class="list-unstyled components">
+                        <li>
+                            <a href="/add-user">
+                            <i class="glyphicon glyphicon-plus">AddUser</i>
+                            </a>
+                        </li>
+                    </ul>
+                    @endif
             </nav>

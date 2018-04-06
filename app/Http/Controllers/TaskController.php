@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Redirect;
+use App\Event;
 use Carbon\Carbon;
 use App\Task;
 use View;
@@ -87,6 +89,14 @@ class TaskController extends Controller
         $task->deadline = $request->input('deadline');
         $task->user_id = auth()->user()->id;
         $task->save();
+
+        $event = new Event;
+        $event->title = $request->input('title');
+        $event->start_date = Carbon::now();
+        $event->end_date = $request->input('deadline');
+        $event->user_id = Auth::user()->id;
+        $event->task_id = $task->id;
+        $event->save();
         
         return redirect('/tasks')->with('success', 'Task Created');
     }
@@ -95,12 +105,12 @@ class TaskController extends Controller
     {
         $task = new Task;
         $task = Task::where('id', Route::input('id'))->first();
-        if(strpos($task->checklists,($request->name . "notdone")) !== false ) {
-           $task->checklists = str_replace($request->name . "notdone", $request->name . "done", $task->checklists);
+        if(strpos($task->checklists,($request->data . "notdone")) !== false ) {
+           $task->checklists = str_replace($request->data . "notdone", $request->data . "done", $task->checklists);
            $task->save();
         }
         else {
-            $task->checklists = str_replace($request->name . "done", $request->name . "notdone", $task->checklists);
+            $task->checklists = str_replace($request->data . "done", $request->data . "notdone", $task->checklists);
             $task->save();
         }
         
@@ -125,13 +135,28 @@ class TaskController extends Controller
         $task->assigned_to = json_decode($task->assigned_to);
         $task->observers = json_decode($task->observers);
         $task->checklists = json_decode($task->checklists);
+        $task->comment = json_decode($task->comment);
         
         return view('tasks.show')->with('task', $task)->with('time', $time);
     }
 
-    public function addComment($id)
+    public function addComment(Request $request,$id)
     {
-        return "hello";
+        $task = Task::find($id);
+        $comment = json_decode($task->comment);
+        if($comment) {
+            array_push($comment, $request->comment);
+            array_push($comment, Auth::user()->name);
+        }
+        else {
+            $comment = [];
+            array_push($comment, $request->comment);
+            array_push($comment, Auth::user()->name);
+        }
+        $task->comment = json_encode($comment);
+        $task->save();
+        return Redirect::back()->with('success','Comment added !');
+      
     }
 
     /**

@@ -12,20 +12,24 @@
     <div style="display:none !important" id="taskPause">2</div>
     @endif
     <div>
-    
         {!!$task->description!!}
+        @if($task->assigned_to)
         <h3>Assigned to:</h3>
         <div>
-        @foreach ($task->assigned_to as $asign)
-          <p>{{$asign}}</p>
-        @endforeach
-      </div>
+          @foreach ($task->assigned_to as $asign)
+            <p>{{$asign}}</p>
+          @endforeach
+        </div>
+        @endif 
+      @if($task->observers)
       <h3>Observers:</h3>
         <div>
-        @foreach ($task->observers as $asign)
-          <p>{{$asign}}</p>
-        @endforeach 
+          @foreach ($task->observers as $asign)
+            <p>{{$asign}}</p>
+          @endforeach 
       </div>
+      @endif
+      @if($task->checklists)
       <h3>TO DO:</h3>
         <div>
           <?php $result =""; $counter = 0;?>
@@ -38,25 +42,27 @@
               $asign = substr($asign,0, -7);
               $counter = 1;
             }
-              
-              ?>
-            <p><input class="notdone" type="checkbox" name="{{$asign}}" id="{{$asign}}"/><label class="notdone" id="{{$asign}}2" for="{{$asign}}" >{{$asign}}</label></p>
+            $specialChars = [" ", "!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^"];
+            $stripedAsign = str_replace($specialChars,"", $asign);
+            
+            ?>
+            <p><input class="notdone" type="checkbox" name="{{$stripedAsign}}" id="{{$stripedAsign}}"/><label class="notdone" id="{{$stripedAsign}}2" for="{{$stripedAsign}}" >{{$asign}}</label></p>
               <?php
               $result = $result."<script>$(document).ready( function()  { 
-                $('#{$asign}').change(function(){
-                  if($('#{$asign}').is(':checked'))
-                    $.get(window.location.href + '/updateChecklist', {data: 1, name: '{$asign}'}, function( data ){
-                      $('#{$asign}').addClass('done');
-                      $('#{$asign}').removeClass('notdone');
-                      $('#{$asign}2').addClass('done');
-                      $('#{$asign}2').removeClass('notdone');
+                $('#{$stripedAsign}').change(function(){
+                  if($('#{$stripedAsign}').is(':checked'))
+                    $.get(window.location.href + '/updateChecklist', {data: '{$asign}', name: '{$stripedAsign}'}, function( data ){
+                      $('#{$stripedAsign}').addClass('done');
+                      $('#{$stripedAsign}').removeClass('notdone');
+                      $('#{$stripedAsign}2').addClass('done');
+                      $('#{$stripedAsign}2').removeClass('notdone');
                     });
                   else
-                    $.get(window.location.href + '/updateChecklist', {data: 0, name: '{$asign}'});
-                    $('#{$asign}').addClass('notdone');
-                    $('#{$asign}').removeClass('done');
-                    $('#{$asign}2').addClass('notdone');
-                    $('#{$asign}2').removeClass('done');
+                    $.get(window.location.href + '/updateChecklist', {data: '{$asign}', name: '{$stripedAsign}'});
+                    $('#{$stripedAsign}').addClass('notdone');
+                    $('#{$stripedAsign}').removeClass('done');
+                    $('#{$stripedAsign}2').addClass('notdone');
+                    $('#{$stripedAsign}2').removeClass('done');
                 })
                 })</script>";
               ?>
@@ -67,32 +73,37 @@
               $asign = substr($asign,0, -4);
               $counter = 1;
             }
+            $specialChars = [" ", "!", "#", "$", "%", "&", "'", "(", ")", "*", "+", ",", ".", "/", ":", ";", "<", "=", ">", "?", "@", "[", "]", "^"];
+            $stripedAsign = str_replace($specialChars,"", $asign);
             ?>
-          <p><input class='done' checked type='checkbox' name='{{$asign}}' id='{{$asign}}'/><label class='done' id='{{$asign}}2' for='{{$asign}}' >{{$asign}}</label></p>
+          <p><input class='done' checked type='checkbox' name='{{$stripedAsign}}' id='{{$stripedAsign}}'/><label class='done' id='{{$stripedAsign}}2' for='{{$stripedAsign}}' >{{$asign}}</label></p>
           <?php $result = $result."<script>$(document).ready( function()  { 
-$('#{$asign}').change(function(){
-  if($('#{$asign}').is(':checked'))
-    $.get(window.location.href + '/updateChecklist', {data: 1, name: '{$asign}'}, function( data ){
-      $('#{$asign}').addClass('done');
-      $('#{$asign}').removeClass('notdone');
-      $('#{$asign}2').addClass('done');
-      $('#{$asign}2').removeClass('notdone');
+$('#{$stripedAsign}').change(function(){
+  if($('#{$stripedAsign}').is(':checked'))
+    $.get(window.location.href + '/updateChecklist', {data: '{$stripedAsign}', name: '{$stripedAsign}'}, function( data ){
+      $('#{$stripedAsign}').addClass('done');
+      $('#{$stripedAsign}').removeClass('notdone');
+      $('#{$stripedAsign}2').addClass('done');
+      $('#{$stripedAsign}2').removeClass('notdone');
     });
   else
-    $.get(window.location.href + '/updateChecklist', {data: 0, name: '{$asign}'});
-    $('#{$asign}').addClass('notdone');
-    $('#{$asign}').removeClass('done');
-    $('#{$asign}2').addClass('notdone');
-    $('#{$asign}2').removeClass('done');
+    $.get(window.location.href + '/updateChecklist', {data: '{$asign}', name: '{$asign}'});
+    $('#{$stripedAsign}').addClass('notdone');
+    $('#{$stripedAsign}').removeClass('done');
+    $('#{$stripedAsign}2').addClass('notdone');
+    $('#{$stripedAsign}2').removeClass('done');
 })
 })</script>"?>
           @endif
-        @endforeach 
+        @endforeach
       </div>
+      @endif
+      @if( $task->planned_time != 0)
       <h3>Estimated time:</h3>
         <div>
           <p>{{ floor($task->planned_time / 60)}} hours and {{$task->planned_time % 60}} minutes</p>
       </div>
+      @endif
     </div>
     <hr>
     <div>
@@ -113,6 +124,14 @@ $('#{$asign}').change(function(){
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommentModal">
   Add comment
 </button>
+@if($task->comment)
+  <h3>Comments:</h3>
+        <div>
+        @for ($i = 0;$i < count($task->comment); $i += 2)
+          <p>{{$task->comment[$i]}} {{$task->comment[$i+1]}}</p>
+        @endfor
+      </div>
+      @endif
     <!--modal-->
     <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="addCommentModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -126,7 +145,7 @@ $('#{$asign}').change(function(){
       {!!Form::open(['action' => ['TaskController@addComment', $task->id], 'method' => 'POST', 'id' => 'formComment'])!!}
       <div class="modal-body">
         <label for="comment">Comment:</label><br>
-        <input id="comment" type="text"></input>
+        <input id="comment" name="comment" type="text"></input>
         </form>
       </div>
       <div class="modal-footer">
@@ -140,22 +159,8 @@ $('#{$asign}').change(function(){
 @endsection
 
 @push('scripts')
-<?php echo $result; 
-// echo "<script>$(document).ready( function()  { 
-// $('#asd').change(function(){
-//   if($('#asd').is(':checked'))
-//     $.get(window.location.href + '/updateChecklist', {data: 1, name: 'asd'}, function( data ){
-//       $('#asd').addClass('done');
-//       $('#asd').removeClass('notdone');
-//       $('#asd2').addClass('done');
-//       $('#asd2').removeClass('notdone');
-//     });
-//   else
-//     $.get(window.location.href + '/updateChecklist', {data: 0, name: 'asd'});
-//     $('#asd').addClass('notdone');
-//     $('#asd').removeClass('done');
-//     $('#asd2').addClass('notdone');
-//     $('#asd2').removeClass('done');
-// })
-//})</script>";?>
+<?php 
+if(isset($result))
+  echo $result; 
+?>
 @endpush

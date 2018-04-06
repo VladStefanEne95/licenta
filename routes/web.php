@@ -19,6 +19,12 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/add-user', 'AddUserController@index');
+Route::get('/confirm/{id}', 'AddUserController@confirm');
+Route::post('/update-pass/{id}', 'AddUserController@updatePas');
+Route::post('/register-email', 'AddUserController@regEmail');
+
+
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/add-pause', 'WorkTimeController@addPause');
 Route::get('/start-work-time', 'WorkTimeController@startWorkTime');
@@ -33,25 +39,44 @@ Route::resource('tasks', 'TaskController');
 Route::get('/tasks/{id}/updateChecklist', 'TaskController@updateChecklist');
 Route::resource('positions', 'PositionController');
 Route::resource('departaments', 'DepartamentController');
+
+Route::resource('projects', 'ProjectsController');
+
 Route::post('tasks/{id}/addComment', 'TaskController@addComment');
 Route::post('positions/{id}/changeName', 'PositionController@changeName');
 Route::post('departaments/{id}/changeName', 'DepartamentController@changeName');
 
 
-Route::get('/chat', function () {
+Route::get('/chat/users', function () {
+    return view('chatusers');
+})->middleware('auth');
+
+
+Route::get('/chat/users/{id}', function () {
     return view('chat');
 })->middleware('auth');
 
-Route::get('/messages', function () {
-    return App\Message::with('user')->get();
+Route::get('/messages/{id}', function ($id) {
+    $user = Auth::user();
+    $result = App\Message::with('user')->get();
+    $result_ret = [];
+    for($i = 0; $i < count($result); $i++) {
+        if( ($result[$i]->user_id == Auth::user()->id && $result[$i]->user_recv_id == $id)  ||
+        ($result[$i]->user_id == $id && $result[$i]->user_recv_id == Auth::user()->id ) )
+            array_push($result_ret, $result[$i]);
+    }
+    return $result_ret;
 })->middleware('auth');
 
-Route::post('/messages', function () {
+Route::post('/messages/{id}', function ($id) {
     // Store the new message
     $user = Auth::user();
+    $message = request()->get('message');
     $message = $user->messages()->create([
-        'message' => request()->get('message')
+        'message' => $message,
+        'user_recv_id' => $id
     ]);
+
     // Announce that a new message has been posted
     broadcast(new MessagePosted($message, $user))->toOthers();
     return ['status' => 'OK'];
@@ -61,4 +86,10 @@ Route::post('/messages', function () {
 Route::get('/gantt', function () {
     return view('gantt');
 });
-Route::get('events', 'EventController@index');
+Route::get('/events', 'EventController@index');
+Route::get('/fileupl', function() {
+    return view('fileupl');
+});
+Route::get('/fileshow', function() {
+    return view('fileshow');
+});

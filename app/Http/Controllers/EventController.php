@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Event;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
@@ -14,6 +14,7 @@ class EventController extends Controller
                 $data = Event::all();
                 if($data->count()) {
                     foreach ($data as $key => $value) {
+                        if($value->user_id == Auth::user()->id)
                         $events[] = Calendar::event(
                             $value->title,
                             true,
@@ -23,12 +24,12 @@ class EventController extends Controller
                             // Add color and link on event
                          [
                              'color' => '#ff0000',
-                             'url' => 'pass here url and any route',
+                             'url' => '/tasks/'.strval($value->task_id),
                          ]
                         );
                     }
                 }
                 $calendar = Calendar::addEvents($events);
-                return view('fullcalendar', compact('calendar'));
+               return view('fullcalendar', compact('calendar'));
             }
 }
