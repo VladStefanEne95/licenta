@@ -33,6 +33,10 @@
             {{Form::label('priority', 'Priority')}}
             {{ Form::select('priority', ['low', 'medium', 'high', 'top priority' ], null, ['id' => 'priority' , 'class' => 'form-control']) }}
         </div>
+        <div class="form-group">
+            {{Form::label('project', 'Project')}}
+            {{ Form::select('project', ['1', '2', '3', '4' ], null, ['id' => 'todo' , 'class' => 'form-control']) }}
+        </div>
         <div>
             <p>Estimated time</p>
         <label>Number of hours:</label>

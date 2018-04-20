@@ -332,3 +332,42 @@ a.article, a.article:hover {
     margin: -25px -30px 15px;
     font-weight: 700;
 }
+body {
+    background: #D8DCE3
+}
+
+.home-zone {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    background: white;
+    text-align: center;
+    margin-right: 17%;
+    margin-top: 40px;
+}
+.small-card {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    display: inline-block;
+    width: 25%;
+    margin-right: 40px;
+    margin-top:20px;
+    height: 150px;
+    background:white;
+}
+.graph-full {
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    margin-right: 25%;
+    margin-top: 30px;
+}
+
+.card-half{
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border-radius: 3px;
+    display: inline-block;
+    width: 40%;
+    margin-right: 30px;
+    margin-top:20px;
+    height: 150px;
+    background:white;
+}

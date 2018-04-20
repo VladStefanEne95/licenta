@@ -29,15 +29,25 @@ const app = new Vue({
         addMessage(message) {
             // Add to existing messages
             this.messages.push(message);
-            let url = '/messages/' + (window.location.href).split("/").pop();
+            let url;
+            if(window.location.href.indexOf('projects') > -1) {
+                url = '/msgProjects/' + (window.location.href).split("/").pop();    
+            } else {
+                url = '/messages/' + (window.location.href).split("/").pop();
+            }
             // Persist to the database etc
             axios.post(url, message).then(response => {
                 
             })
         }
-    },
+    }, 
     created() {
-        let url = '/messages/' + (window.location.href).split("/").pop();
+        let url;
+            if(window.location.href.indexOf('projects') > -1) {
+                url = '/msgProjects/' + (window.location.href).split("/").pop();    
+            } else {
+                url = '/messages/' + (window.location.href).split("/").pop();
+            }
         axios.get(url).then(response => {
             this.messages = response.data;
         });

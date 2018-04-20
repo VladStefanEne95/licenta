@@ -1420,7 +1420,12 @@ var app = new Vue({
         addMessage: function addMessage(message) {
             // Add to existing messages
             this.messages.push(message);
-            var url = '/messages/' + window.location.href.split("/").pop();
+            var url = void 0;
+            if (window.location.href.indexOf('projects') > -1) {
+                url = '/msgProjects/' + window.location.href.split("/").pop();
+            } else {
+                url = '/messages/' + window.location.href.split("/").pop();
+            }
             // Persist to the database etc
             axios.post(url, message).then(function (response) {});
         }
@@ -1428,7 +1433,12 @@ var app = new Vue({
     created: function created() {
         var _this = this;
 
-        var url = '/messages/' + window.location.href.split("/").pop();
+        var url = void 0;
+        if (window.location.href.indexOf('projects') > -1) {
+            url = '/msgProjects/' + window.location.href.split("/").pop();
+        } else {
+            url = '/messages/' + window.location.href.split("/").pop();
+        }
         axios.get(url).then(function (response) {
             _this.messages = response.data;
         });

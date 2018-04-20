@@ -18,4 +18,4 @@ export default {
 .chat-message > p {
     margin-bottom: .5rem;
 }
-</style>
+</style> 

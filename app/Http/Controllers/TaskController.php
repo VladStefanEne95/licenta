@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use App\Event;
 use Carbon\Carbon;
 use App\Task;
@@ -21,8 +23,18 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('id','asc')->paginate(10);
-        return view('tasks.index')->with('tasks', $tasks);
+        $tasks = Task::orderBy('id','asc')->get();
+        $result = [];
+        for ($i = 0; $i < count($tasks); $i++) {
+            if( strpos($tasks[$i]->assigned_to, '"'.auth()->user()->name.'"' ) )
+                array_push($result, $tasks[$i]);
+        }
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $col = new Collection($result);
+        $perPage = 5;
+        $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
+        $entries = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,['path' => LengthAwarePaginator::resolveCurrentPath()] );
+        return view('tasks.index')->with('tasks', $entries);
     }
 
     /**
@@ -87,6 +99,7 @@ class TaskController extends Controller
         $result_json = json_encode( explode(",", $result_json ));
         $task->observers = $result_json;
         $task->deadline = $request->input('deadline');
+        $task->project = $request->input('project');
         $task->user_id = auth()->user()->id;
         $task->save();
 
@@ -201,7 +214,14 @@ class TaskController extends Controller
         $task->save();
         return redirect('/tasks')->with('success', 'Task Updated');
     }
- 
+    
+    public function finishTask(Request $request)
+    {
+        $id = Route::input('id');
+        $task = Task::find($id);
+        $task->done = 1;
+        $task->save();
+    } 
     /**
      * Remove the specified resource from storage.
      *

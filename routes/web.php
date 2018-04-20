@@ -30,10 +30,17 @@ Route::get('/add-pause', 'WorkTimeController@addPause');
 Route::get('/start-work-time', 'WorkTimeController@startWorkTime');
 Route::get('/add-new-work-time', 'WorkTimeController@addNewWorkTime');
 
+Route::get('/tasks/{id}/finish-task', 'TaskController@finishTask');
+
+
 Route::get('/tasks/{id}/start-task-time', 'TaskTimeController@startTaskTime');
 Route::get('/tasks/{id}/update-task-time', 'TaskTimeController@updateTaskTime');
 
 Route::get('/get-time-data', 'GetTimeDataController@getData');
+
+Route::get('/report-deadline', 'ReportsController@deadline');
+
+Route::get('/report-time-spent', 'ReportsController@timeSpent');
 
 Route::resource('tasks', 'TaskController');
 Route::get('/tasks/{id}/updateChecklist', 'TaskController@updateChecklist');
@@ -51,8 +58,14 @@ Route::get('/chat/users', function () {
     return view('chatusers');
 })->middleware('auth');
 
+Route::get('/chat/projects', 'ProjectsController@list');
+
 
 Route::get('/chat/users/{id}', function () {
+    return view('chat');
+})->middleware('auth');
+
+Route::get('/chat/projects/{id}', function () {
     return view('chat');
 })->middleware('auth');
 
@@ -68,6 +81,17 @@ Route::get('/messages/{id}', function ($id) {
     return $result_ret;
 })->middleware('auth');
 
+Route::get('/msgProjects/{id}', function ($id) {
+    $user = Auth::user();
+    $result = App\Message::with('user')->get();
+    $result_ret = [];
+    for($i = 0; $i < count($result); $i++) {
+         if( $result[$i]->project == $id)
+             array_push($result_ret, $result[$i]);
+     }
+     return $result_ret;
+})->middleware('auth');
+
 Route::post('/messages/{id}', function ($id) {
     // Store the new message
     $user = Auth::user();
@@ -75,6 +99,20 @@ Route::post('/messages/{id}', function ($id) {
     $message = $user->messages()->create([
         'message' => $message,
         'user_recv_id' => $id
+    ]);
+
+    // Announce that a new message has been posted
+    broadcast(new MessagePosted($message, $user))->toOthers();
+    return ['status' => 'OK'];
+})->middleware('auth');
+
+Route::post('/msgProjects/{id}', function ($id) {
+    // Store the new message
+    $user = Auth::user();
+    $message = request()->get('message');
+    $message = $user->messages()->create([
+        'message' => $message,
+        'project' => $id
     ]);
 
     // Announce that a new message has been posted

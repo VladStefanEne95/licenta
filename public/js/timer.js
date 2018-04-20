@@ -94,3 +94,11 @@ function continueTaskTime() {
     timer_arr[window.location.href] = 1;
     $.get(window.location.href + "/update-task-time", {time: task_timer_seconds, pause : 0});
 }
+
+
+
+function finishTask() {
+    let aux = window.location.href + "/finish-task";
+    $.get( aux );
+    toastr.success('Task status has been updated', 'Succes!')
+}

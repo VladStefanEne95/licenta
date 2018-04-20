@@ -21,6 +21,7 @@ class CreateTaskTimeMonitorization extends Migration
             $table->integer('pause');
             $table->integer('working_seconds');
             $table->integer('task_id');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

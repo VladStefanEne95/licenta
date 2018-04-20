@@ -12,5 +12,9 @@
             {!!Form::close()!!}
             
     @endif
+    <h3>Task list </h3>
+    @foreach($tasks as $task)
+      <a href='/tasks/{{$task->id}}'>{{$task->title}}</a></p>
+    @endforeach
  
 @endsection
