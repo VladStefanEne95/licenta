@@ -112,10 +112,9 @@ $('#{$stripedAsign}').change(function(){
     </div>
     <hr>
             
-            @if(!$task->done)
             <button id="taskTimeBtn" type="button" class="btn btn-success" onclick="startTaskTime()" >Start time tracking</button>
             <button id="taskTimeBtn" type="button" class="btn btn-info" onclick="finishTask()" >Finish task</button>
-            @endif
+          
     @if(!Auth::guest())
         @if(Auth::user()->id == $task->user_id)
             <a href="/tasks/{{$task->id}}/edit" class="btn btn-default">Edit</a>

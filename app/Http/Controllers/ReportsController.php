@@ -14,13 +14,12 @@ use View;
 
 class ReportsController extends Controller
 {
-    public function deadline()
+    public function deadline($id)
     {
-        $users = User::orderBy('id','asc')->get();
+        $user = User::find($id);
         $tasks = Task::orderBy('id','asc')->get();   
         $task_times = TaskTime::orderBy('id','asc')->get();
 
-        foreach($users as $user) {
             foreach($tasks as $task){
                 foreach($task_times as $task_time){
                     if($task_time->user_id == $user->id &&
@@ -48,19 +47,18 @@ class ReportsController extends Controller
                             }
                     }
                 }
-            }
+            
         
         }
     }
 
 
-    public function timeSpent()
+    public function timeSpent($id)
     {
-        $users = User::orderBy('id','asc')->get();
+        $user = User::find($id);
         $tasks = Task::orderBy('id','asc')->get();   
         $task_times = TaskTime::orderBy('id','asc')->get();
 
-        foreach($users as $user) {
             foreach($tasks as $task){
                 foreach($task_times as $task_time){
                     if($task_time->user_id == $user->id &&
@@ -89,9 +87,13 @@ class ReportsController extends Controller
                     }
                 }
             }
-        
-        }
+    }
 
+    public function list() {
+        $users = User::orderBy('id','asc')->get();
+        foreach ($users as $user) {
+            echo "$user->name  $user->id <br>";
+        }
     }
 }
 

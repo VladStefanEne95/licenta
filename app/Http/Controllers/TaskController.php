@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Database\Eloquent\Collection;
 use App\Event;
+use App\User;
 use Carbon\Carbon;
 use App\Task;
+use App\TaskTime;
 use View;
+use Mail;
 
 class TaskController extends Controller
 {
@@ -101,6 +104,28 @@ class TaskController extends Controller
         $task->deadline = $request->input('deadline');
         $task->project = $request->input('project');
         $task->user_id = auth()->user()->id;
+        $names = json_decode($task->assigned_to);
+        $users = User::all();
+        $allTasks = Task::all();
+        $idTask = 0;
+        foreach($allTasks as  $allTask) {
+            $idTask = $allTask->id;
+        }
+        $idTask++;
+        
+        foreach($users as $user) {
+            foreach($names as $name) {
+                if(strcmp(trim($name), $user->name) == 0) {             
+                    Mail::send('emails.addTask', ['name' => $name, 'title' => $task->title, 'description' => $task->description, 'link' => "/tasks/$idTask/"], function ($message) use ($user)
+                    {
+                        $message->from('me@gmail.com', 'Ene Vlad Stefan');
+                        $message->to($user->email);
+                        
+                    });
+                }
+            }
+        }
+
         $task->save();
 
         $event = new Event;
@@ -219,8 +244,21 @@ class TaskController extends Controller
     {
         $id = Route::input('id');
         $task = Task::find($id);
-        $task->done = 1;
-        $task->save();
+        $task_times = TaskTime::orderBy('id','asc')->get();
+        foreach($task_times as $task_time){
+            if($task_time->user_id == auth()->user()->id &&
+                $task_time->task_id == $id) {
+                $task_time->done = 1;
+                $task_time->save();
+                Mail::send('emails.finishTask', ['name' => auth()->user()->name, 'title' => $task->title, 'link' => "/tasks/$task->id/"], function ($message)
+                {
+                    $message->from('me@gmail.com', 'Ene Vlad Stefan');
+                    $message->to('adminemail@gmail.com');
+                    
+                });
+
+            }
+        }
     } 
     /**
      * Remove the specified resource from storage.

@@ -33,14 +33,23 @@ Route::get('/add-new-work-time', 'WorkTimeController@addNewWorkTime');
 Route::get('/tasks/{id}/finish-task', 'TaskController@finishTask');
 
 
+Route::get('/edit/{id}', 'UserController@edit');
+
+
 Route::get('/tasks/{id}/start-task-time', 'TaskTimeController@startTaskTime');
 Route::get('/tasks/{id}/update-task-time', 'TaskTimeController@updateTaskTime');
 
-Route::get('/get-time-data', 'GetTimeDataController@getData');
 
-Route::get('/report-deadline', 'ReportsController@deadline');
+Route::get('/update-rescue', 'GetTimeDataController@updateData');
+Route::post('/add-key', 'GetTimeDataController@addKey');
+Route::get('/get-productivity/{id}', 'GetTimeDataController@getProductivity');
+Route::get('/get-social/{id}', 'GetTimeDataController@getSocial');
+Route::get('/get-entertainment/{id}', 'GetTimeDataController@getEntertainment');
+Route::get('/get-overview/{id}', 'GetTimeDataController@getOverview');
 
-Route::get('/report-time-spent', 'ReportsController@timeSpent');
+Route::get('/report-deadline/{id}', 'ReportsController@deadline');
+Route::get('/reports', 'ReportsController@list');
+Route::get('/report-time-spent/{id}', 'ReportsController@timeSpent');
 
 Route::resource('tasks', 'TaskController');
 Route::get('/tasks/{id}/updateChecklist', 'TaskController@updateChecklist');
