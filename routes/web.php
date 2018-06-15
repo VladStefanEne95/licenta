@@ -20,6 +20,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/add-user', 'AddUserController@index');
+Route::get('/delete-user/{id}', 'AddUserController@deleteUser');
 Route::get('/confirm/{id}', 'AddUserController@confirm');
 Route::post('/update-pass/{id}', 'AddUserController@updatePas');
 Route::post('/register-email', 'AddUserController@regEmail');
@@ -47,9 +48,15 @@ Route::get('/get-social/{id}', 'GetTimeDataController@getSocial');
 Route::get('/get-entertainment/{id}', 'GetTimeDataController@getEntertainment');
 Route::get('/get-overview/{id}', 'GetTimeDataController@getOverview');
 
+Route::get('/get-productivity', 'GetTimeDataController@getProductivityAll');
+Route::get('/get-social', 'GetTimeDataController@getSocialAll');
+Route::get('/get-entertainment', 'GetTimeDataController@getEntertainmentAll');
+Route::get('/get-overview', 'GetTimeDataController@getOverviewAll');
+
 Route::get('/report-deadline/{id}', 'ReportsController@deadline');
 Route::get('/reports', 'ReportsController@list');
 Route::get('/report-time-spent/{id}', 'ReportsController@timeSpent');
+Route::get('/report-hours/{id}', 'ReportsController@hours');
 
 Route::resource('tasks', 'TaskController');
 Route::get('/tasks/{id}/updateChecklist', 'TaskController@updateChecklist');
@@ -134,6 +141,7 @@ Route::get('/gantt', function () {
     return view('gantt');
 });
 Route::get('/events', 'EventController@index');
+Route::post('/addEvent', 'EventController@create');
 Route::get('/fileupl', function() {
     return view('fileupl');
 });

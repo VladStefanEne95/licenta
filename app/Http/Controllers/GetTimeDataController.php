@@ -49,7 +49,7 @@ class GetTimeDataController extends Controller
             }
         }
     }
-
+//one user
     public function getProductivity($id) {
         $rescues = RescueTime::all();
         $result = [];
@@ -58,7 +58,7 @@ class GetTimeDataController extends Controller
                 array_push($result, $rescue);
             }
         }
-        return view('reports.productivity')->with('rescue', $result);
+        return view('reports.user.productivity')->with('rescue', $result);
     }
 
     public function getSocial($id) {
@@ -69,7 +69,7 @@ class GetTimeDataController extends Controller
                 array_push($result, $rescue);
             }
         }
-        return view('reports.social')->with('rescue', $result);
+        return view('reports.user.social')->with('rescue', $result);
     }
 
 
@@ -81,20 +81,61 @@ class GetTimeDataController extends Controller
                 array_push($result, $rescue);
             }
         }
-        return view('reports.entertainment')->with('rescue', $result);
+        return view('reports.user.entertainment')->with('rescue', $result);
     }
 
     public function getOverview($id) {
         $rescues = RescueTime::all();
         $result = [];
+        $all = [];
         foreach ($rescues as $rescue) {
             if($rescue->user_id == $id) {
                 array_push($result, $rescue);
             }
+            array_push($all, $rescue);
         }
-        return view('reports.overview')->with('rescue', $result);
+        return view('reports.user.overview')->with('rescue', $result)->with('all', $all);
     }
 
+    //all company
+
+
+    public function getProductivityAll() {
+        $rescues = RescueTime::all();
+        $result = [];
+        foreach ($rescues as $rescue) {
+            array_push($result, $rescue);
+        }
+        return view('reports.all.productivity')->with('rescue', $result);
+    }
+
+    public function getSocialAll() {
+        $rescues = RescueTime::all();
+        $result = [];
+        foreach ($rescues as $rescue) {
+            array_push($result, $rescue);
+        }
+        return view('reports.all.social')->with('rescue', $result);
+    }
+
+
+    public function getEntertainmentAll() {
+        $rescues = RescueTime::all();
+        $result = [];
+        foreach ($rescues as $rescue) {
+            array_push($result, $rescue);
+        }
+        return view('reports.all.entertainment')->with('rescue', $result);
+    }
+
+    public function getOverviewAll() {
+        $rescues = RescueTime::all();
+        $result = [];
+        foreach ($rescues as $rescue) {
+            array_push($result, $rescue);
+        }
+        return view('reports.all.overview')->with('rescue', $result);
+    }
 
     public function getDailyProductivity($id) {
         $user = User::find($id);

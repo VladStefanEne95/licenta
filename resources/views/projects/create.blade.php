@@ -22,6 +22,10 @@
             {{Form::text('users', '', ['id' => 'skills', 'class' => 'form-control', 'placeholder' => 'Members'])}}
         </div>
         <div class="form-group">
+            {{Form::label('deadline', 'Deadline')}}
+            {{Form::date('deadline', '', ['class' => 'form-control'])}}
+        </div>
+        <div class="form-group">
             {{Form::label('owner', 'Supervisor')}}
             {{Form::text('owner', '', ['class' => 'form-control', 'placeholder' => 'Supervisorc'])}}
         </div>

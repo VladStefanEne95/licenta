@@ -27,6 +27,9 @@
   <link href="/css/main.css" rel="stylesheet" type="text/css">
         
 </head>
+<style>
+    
+    </style>
 <body>
         <div id="app">
             <div class="wrapper">

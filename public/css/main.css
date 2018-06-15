@@ -333,7 +333,7 @@ a.article, a.article:hover {
     font-weight: 700;
 }
 body {
-    background: #D8DCE3
+    background:#f9f9f9;
 }
 
 .home-zone {
@@ -370,4 +370,99 @@ body {
     margin-top:20px;
     height: 150px;
     background:white;
+}
+
+.chat-window{
+    text-align: left;
+    background: #f9f9f9;
+}
+.chat-left {
+    border-right: 1px solid #E4E7ED;
+    z-index: 999;
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    height: 400px;
+    overflow-y: scroll;
+}
+.chat-right {
+    display: inline-block;
+    width: 65%;
+    vertical-align: top;
+    margin-left: 20px;
+}
+.iframe {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+}
+.media-list .media {
+    padding: 1.5rem;
+    margin-top:0;
+}
+.profile-picture {
+    width: 40px;
+    height: 40px;
+    text-align: left;
+    display: inline-block;
+    vertical-align: top;
+}
+.img-block{
+    display: inline-block;
+    vertical-align: top;
+}
+.last-message {
+    text-align: left;
+    display: inline-block;
+    margin-left:10px;
+    vertical-align: top;
+    margin-top:0;
+}
+.list-group-item-heading {
+    text-align: left;
+    display: inline-block;
+    margin-left:10px;
+    width: 30%;
+    vertical-align: top;
+}
+.block-user{
+    padding: 1rem;
+}
+.msg-time {
+    display: inline-block;
+    text-align: right;
+    width: 30%;
+    vertical-align: top;
+    margin-top: 0;
+    margin-left:30px;
+}
+.user-msg {
+    display: inline-block;
+    width: 60%;
+}
+
+.hr {
+    margin: 0;
+    border-top: 1px solid grey;
+}
+
+.user-left {
+    text-align:left;
+    margin-left: 10px;
+}
+
+
+.user-right {
+    text-align:right;
+    margin-right: 10px;
+}
+
+.img-with-text {
+    display: inline-block;
+    vertical-align: top;
+}
+.main-chat-text {
+    display: inline-block;
+    vertical-align: top;
 }

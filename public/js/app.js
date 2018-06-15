@@ -1456,6 +1456,7 @@ var app = new Vue({
                 message: e.message.message,
                 user: e.user
             });
+            msg = 1;
         });
     }
 });
@@ -48600,9 +48601,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['message']
+    props: { message: Object, currentUser: String }
 });
 
 /***/ }),
@@ -48614,12 +48631,55 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "chat-message" }, [
-    _c("p", [_vm._v(_vm._s(_vm.message.message))]),
-    _vm._v(" "),
-    _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
+    _vm.currentUser == _vm.message.user.name
+      ? _c("div", { staticClass: "user-left" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "main-chat-text" }, [
+            _c("small", [_vm._v(_vm._s(_vm.message.user.name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.message.message))])
+          ])
+        ])
+      : _c("div", { staticClass: "user-right" }, [
+          _c("div", { staticClass: "main-chat-text" }, [
+            _c("small", [_vm._v(_vm._s(_vm.message.user.name))]),
+            _vm._v(" "),
+            _c("p", [_vm._v(_vm._s(_vm.message.message))])
+          ]),
+          _vm._v(" "),
+          _vm._m(1)
+        ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "img-with-text" }, [
+      _c("img", {
+        staticStyle: { width: "40px", height: "40px" },
+        attrs: {
+          src: "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "img-with-text" }, [
+      _c("img", {
+        staticStyle: { width: "40px", height: "40px" },
+        attrs: {
+          src: "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
+        }
+      })
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -48737,7 +48797,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['messages']
+    props: { messages: Array, currentUser: String }
 });
 
 /***/ }),
@@ -48750,12 +48810,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticClass: "chat-log" },
+    { staticClass: "chat-log", attrs: { id: "chat-log" } },
     [
       _vm._l(_vm.messages, function(message) {
         return _c("chat-message", {
           key: message.id,
-          attrs: { message: message }
+          attrs: { currentUser: _vm.currentUser, message: message }
         })
       }),
       _vm._v(" "),
@@ -48910,6 +48970,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }
             });
             this.messageText = '';
+            msg = 1;
         }
     }
 });
@@ -48959,7 +49020,11 @@ var render = function() {
     _vm._v(" "),
     _c(
       "button",
-      { staticClass: "btn btn-primary", on: { click: _vm.sendMessage } },
+      {
+        staticClass: "btn btn-primary",
+        attrs: { id: "sendMessage" },
+        on: { click: _vm.sendMessage }
+      },
       [_vm._v("Send")]
     )
   ])

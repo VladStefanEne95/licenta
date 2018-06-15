@@ -67,7 +67,8 @@ class AddUserController extends Controller
     public function confirm($id) {
         $user = new User;
         $user = User::where('uuid', Route::input('id'))->first();
-        
+        if(!$user)
+            return "Cont deja activat";
         return view('/confirmpass')->with('user',$user );
 
     }
@@ -75,8 +76,13 @@ class AddUserController extends Controller
         $user = new User;
         $user = User::where('uuid', Route::input('id'))->first();
         $user->password = bcrypt($request->password);
+        $user->uuid = null;
         $user->save();
         return redirect('/login');
 
+    }
+    public function deleteUser($id) {
+        $user = User::find($id);
+        $user->delete();
     }
 }

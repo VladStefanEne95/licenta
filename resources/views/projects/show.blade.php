@@ -16,5 +16,5 @@
     @foreach($tasks as $task)
       <a href='/tasks/{{$task->id}}'>{{$task->title}}</a></p>
     @endforeach
- 
+    <h3>Deadline:</h3>
 @endsection

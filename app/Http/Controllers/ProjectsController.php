@@ -48,6 +48,7 @@ class ProjectsController extends Controller
         $result_json = $request->input('users');
         $result_json = json_encode( explode(",", $result_json ));
         $project->users = $result_json;
+        $project->deadline = $request->input('deadline');
 
         $project->save();
         return redirect('/projects')->with('success', 'Project Created');

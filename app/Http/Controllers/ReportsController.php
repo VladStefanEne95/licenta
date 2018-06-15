@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 use App\TaskTime;
 use App\Task;
 use App\User;
+use App\WorkTime;
 use View;
 
 class ReportsController extends Controller
@@ -58,35 +59,28 @@ class ReportsController extends Controller
         $user = User::find($id);
         $tasks = Task::orderBy('id','asc')->get();   
         $task_times = TaskTime::orderBy('id','asc')->get();
+        $result = array(); 
 
             foreach($tasks as $task){
                 foreach($task_times as $task_time){
                     if($task_time->user_id == $user->id &&
                         $task_time->task_id == $task->id) {
-                            $estimatedTime = $task->planned_time;
-                            $realTime = $task_time->working_seconds;
-                            $diffrence = $realTime - $estimatedTime;
-                            $raport = $realTime/$estimatedTime;
-                            $percent = round((float)$raport * 100 ) . '%';
-                            if ($diffrence < 0) {
-                                echo $user->name;
-                                echo $task->name . " spent less  on this task with ";
-                                echo $diffrence . "seconds";
-                                echo " for task $task->title";
-                                echo "<br>";
-                            }
-                            else {
-                                echo $user->name;
-                                echo $task->name . " Spent more on this task with: ";
-                                echo $diffrence . "seconds";
-                                echo "for task $task->title";
-                                echo "<br>";
-                            }
-
-                            echo "It took aprox $percent of the estimated time to complete it <br>";
+                            $aux = new \stdClass();
+                            // $estimatedTime = $task->planned_time;
+                            // $realTime = $task_time->working_seconds;
+                            // $diffrence = $realTime - $estimatedTime;
+                            // $raport = $realTime/$estimatedTime;
+                            // $percent = round((float)$raport * 100 ) . '%';
+                            $aux->userName = $user->name;
+                            $aux->taskName = $task->id;
+                            $aux->taskId = $task->id;
+                            $aux->realTime = $task_time->working_seconds;;
+                            $aux->estimatedTime = $task->planned_time;
+                            array_push($result, $aux);
                     }
                 }
             }
+            return view('reports.timespent')->with('result', $result);
     }
 
     public function list() {
@@ -94,6 +88,15 @@ class ReportsController extends Controller
         foreach ($users as $user) {
             echo "$user->name  $user->id <br>";
         }
+    }
+    public function hours($id) {
+        $workTimes = WorkTime::all();
+        $result = array();
+        foreach($workTimes as $workTime) {
+            if ($workTime->user_id == $id)
+                array_push($result, $workTime);
+        }
+        return view('reports.hours')->with('result', $result);
     }
 }
 

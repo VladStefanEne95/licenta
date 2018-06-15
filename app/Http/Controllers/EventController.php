@@ -32,4 +32,15 @@ class EventController extends Controller
                 $calendar = Calendar::addEvents($events);
                return view('fullcalendar', compact('calendar'));
             }
+    
+        public function create(Request $request)
+        {
+            $event = new Event;
+            $event->title = $request->input('title');
+            $event->start_date = $request->input('start');
+            $event->end_date = $request->input('end');
+            $event->user_id = Auth::user()->id;
+            $event->save();
+            return redirect('/events');
+        }
 }

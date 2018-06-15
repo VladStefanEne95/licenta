@@ -35,7 +35,12 @@
         </div>
         <div class="form-group">
             {{Form::label('project', 'Project')}}
-            {{ Form::select('project', ['1', '2', '3', '4' ], null, ['id' => 'todo' , 'class' => 'form-control']) }}
+            <select name="project" id="todo">
+                <option value="0">None</option>
+                @foreach($projects as $project)
+                    <option class="form-control" value="{{$project->id}}">{{$project->name}}</option>
+                @endforeach
+            </select>
         </div>
         <div>
             <p>Estimated time</p>

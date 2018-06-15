@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="chat-composer">
       <input type="text" id="chatInput" placeholder="Start typing your message..." v-model="messageText" @keyup.enter="sendMessage">
-      <button class="btn btn-primary" @click="sendMessage">Send</button>
+      <button id="sendMessage" class="btn btn-primary" @click="sendMessage">Send</button>
   </div>
 </template>
 
@@ -22,6 +22,7 @@ export default {
                 }
             });
             this.messageText = '';
+            msg = 1;
         }
     }
 }

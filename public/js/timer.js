@@ -42,7 +42,8 @@ window.onbeforeunload = closingCode;
 function closingCode(){
     if ($('#taskTimeBtn').text === "Stop time tracking")
         $.get(window.location.href + "/update-task-time", {time: task_timer_seconds, pause : 0});
-    $.get("/add-pause", {time: timer_seconds, pause: 0});
+    if(timer_seconds != 0)
+        $.get("/add-pause", {time: timer_seconds, pause: 0});
    return null;
 }
 
@@ -100,5 +101,5 @@ function continueTaskTime() {
 function finishTask() {
     let aux = window.location.href + "/finish-task";
     $.get( aux );
-    toastr.success('Task status has been updated', 'Succes!')
+    toastr.success('Task status has been updated', 'Succes!');
 }

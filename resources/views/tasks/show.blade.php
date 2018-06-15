@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
     <a href="/tasks" class="btn btn-default">Go Back</a>
     <h1>{{$task->title}}</h1>
     <br><br>
@@ -111,10 +112,12 @@ $('#{$stripedAsign}').change(function(){
           Deadline:  {{$task->deadline}}
     </div>
     <hr>
-            
-            <button id="taskTimeBtn" type="button" class="btn btn-success" onclick="startTaskTime()" >Start time tracking</button>
-            <button id="taskTimeBtn" type="button" class="btn btn-info" onclick="finishTask()" >Finish task</button>
-          
+    @if($time)
+      @if(!$time->done)  
+              <button id="taskTimeBtn" type="button" class="btn btn-success" onclick="startTaskTime()" >Start time tracking</button>
+              <button id="taskTimeBtn" type="button" class="btn btn-info" onclick="finishTask()" >Finish task</button>
+      @endif
+    @endif
     @if(!Auth::guest())
         @if(Auth::user()->id == $task->user_id)
             <a href="/tasks/{{$task->id}}/edit" class="btn btn-default">Edit</a>
@@ -159,6 +162,7 @@ $('#{$stripedAsign}').change(function(){
     </div>
   </div>
 </div>
+
 @endsection
 
 @push('scripts')

@@ -19,6 +19,7 @@ class CreateProjects extends Migration
             $table->text('name');
             $table->text('client');
             $table->text('owner');
+            $table->date('deadline');
             $table->text('tasks');
             $table->text('description');
             $table->timestamps();

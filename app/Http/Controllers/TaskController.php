@@ -14,6 +14,7 @@ use App\User;
 use Carbon\Carbon;
 use App\Task;
 use App\TaskTime;
+use App\Project;
 use View;
 use Mail;
 
@@ -26,10 +27,15 @@ class TaskController extends Controller
      */
     public function index()
     {
+
         $tasks = Task::orderBy('id','asc')->get();
         $result = [];
         for ($i = 0; $i < count($tasks); $i++) {
-            if( strpos($tasks[$i]->assigned_to, '"'.auth()->user()->name.'"' ) )
+            if( strpos($tasks[$i]->assigned_to, '"'.auth()->user()->name.'"' ) || 
+                strpos($tasks[$i]->assigned_to, '" '.auth()->user()->name.'"' ) ||
+                strpos($tasks[$i]->observers, '"'.auth()->user()->name.'"' ) || 
+                strpos($tasks[$i]->observes, '" '.auth()->user()->name.'"' ) || 
+                $tasks[$i]->user_id == auth()->user()->id) 
                 array_push($result, $tasks[$i]);
         }
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
@@ -47,7 +53,8 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        $projects = Project::all();
+        return view('tasks.create')->with('projects', $projects);
     }
 
     public function stripUselessHtml($string)
@@ -112,10 +119,19 @@ class TaskController extends Controller
             $idTask = $allTask->id;
         }
         $idTask++;
-        
         foreach($users as $user) {
             foreach($names as $name) {
-                if(strcmp(trim($name), $user->name) == 0) {             
+                if(strcmp(trim($name), $user->name) == 0) {
+                                
+                    $taskTime = new TaskTime;
+                    $taskTime->working_seconds = 0;
+                    $taskTime->user_id = $user->id;
+                    $taskTime->task_id = $idTask;
+                    $taskTime->clocked_out = 0;
+                    $taskTime->clocked_time = 0;
+                    $taskTime->pause = 0;
+                    $taskTime->save();
+                                 
                     Mail::send('emails.addTask', ['name' => $name, 'title' => $task->title, 'description' => $task->description, 'link' => "/tasks/$idTask/"], function ($message) use ($user)
                     {
                         $message->from('me@gmail.com', 'Ene Vlad Stefan');
@@ -133,7 +149,7 @@ class TaskController extends Controller
         $event->start_date = Carbon::now();
         $event->end_date = $request->input('deadline');
         $event->user_id = Auth::user()->id;
-        $event->task_id = $task->id;
+        $event->task_id = $idTask;
         $event->save();
         
         return redirect('/tasks')->with('success', 'Task Created');
@@ -175,7 +191,9 @@ class TaskController extends Controller
         $task->checklists = json_decode($task->checklists);
         $task->comment = json_decode($task->comment);
         
-        return view('tasks.show')->with('task', $task)->with('time', $time);
+        if($time)
+            return view('tasks.show')->with('task', $task)->with('time', $time);
+        return view('tasks.show')->with('task', $task)->with('time', $time)->with('observer', auth()->user()->name);
     }
 
     public function addComment(Request $request,$id)
@@ -249,6 +267,7 @@ class TaskController extends Controller
             if($task_time->user_id == auth()->user()->id &&
                 $task_time->task_id == $id) {
                 $task_time->done = 1;
+                $task_time->end_date = Carbon::now();
                 $task_time->save();
                 Mail::send('emails.finishTask', ['name' => auth()->user()->name, 'title' => $task->title, 'link' => "/tasks/$task->id/"], function ($message)
                 {
