@@ -48632,54 +48632,49 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "chat-message" }, [
     _vm.currentUser == _vm.message.user.name
-      ? _c("div", { staticClass: "user-left" }, [
-          _vm._m(0),
-          _vm._v(" "),
+      ? _c("div", { staticClass: "user-right" }, [
           _c("div", { staticClass: "main-chat-text" }, [
-            _c("small", [_vm._v(_vm._s(_vm.message.user.name))]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.message.message))])
-          ])
-        ])
-      : _c("div", { staticClass: "user-right" }, [
-          _c("div", { staticClass: "main-chat-text" }, [
-            _c("small", [_vm._v(_vm._s(_vm.message.user.name))]),
-            _vm._v(" "),
-            _c("p", [_vm._v(_vm._s(_vm.message.message))])
+            _c("p", { staticClass: "message-right" }, [
+              _vm._v(_vm._s(_vm.message.message))
+            ])
           ]),
           _vm._v(" "),
-          _vm._m(1)
+          _c("div", { staticClass: "img-with-text" }, [
+            _c("img", {
+              staticStyle: { width: "40px", height: "40px" },
+              attrs: {
+                src:
+                  "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
+          ])
+        ])
+      : _c("div", { staticClass: "user-left" }, [
+          _c("div", { staticClass: "img-with-text" }, [
+            _c("img", {
+              staticStyle: { width: "40px", height: "40px" },
+              attrs: {
+                src:
+                  "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "main-chat-text" }, [
+            _c("p", { staticClass: "message-left" }, [
+              _vm._v(_vm._s(_vm.message.message))
+            ])
+          ])
         ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "img-with-text" }, [
-      _c("img", {
-        staticStyle: { width: "40px", height: "40px" },
-        attrs: {
-          src: "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
-        }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "img-with-text" }, [
-      _c("img", {
-        staticStyle: { width: "40px", height: "40px" },
-        attrs: {
-          src: "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -48775,7 +48770,7 @@ exports = module.exports = __webpack_require__(4)(false);
 
 
 // module
-exports.push([module.i, "\n.chat-log .chat-message:nth-child(even) {\n    background-color: #ccc;\n}\n.empty {\n    padding: 1rem;\n    text-align: center;\n}\n", ""]);
+exports.push([module.i, "\n.chat-log .chat-message:nth-child(even) {\n   /* background-color: #ccc;*/\n}\n.empty {\n    padding: 1rem;\n    text-align: center;\n}\n", ""]);
 
 // exports
 
@@ -48996,7 +48991,7 @@ var render = function() {
       attrs: {
         type: "text",
         id: "chatInput",
-        placeholder: "Start typing your message..."
+        placeholder: "Type your message here..."
       },
       domProps: { value: _vm.messageText },
       on: {

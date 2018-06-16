@@ -85,9 +85,8 @@ class ReportsController extends Controller
 
     public function list() {
         $users = User::orderBy('id','asc')->get();
-        foreach ($users as $user) {
-            echo "$user->name  $user->id <br>";
-        }
+        return view('reports.list')->with('users', $users);
+        
     }
     public function hours($id) {
         $workTimes = WorkTime::all();

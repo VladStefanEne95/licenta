@@ -25,7 +25,11 @@
   <!-- Custom styles for this template-->
   <link href="/css/sb-admin.css" rel="stylesheet">
   <link href="/css/main.css" rel="stylesheet" type="text/css">
-        
+<style>
+    body {
+        background: white;
+    }
+    </style>        
 </head>
 <body>
         <div id="app">

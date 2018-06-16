@@ -71,7 +71,15 @@ Route::post('departaments/{id}/changeName', 'DepartamentController@changeName');
 
 
 Route::get('/chat/users', function () {
-    return view('chatusers');
+    $user = Auth::user();
+    $result = App\Message::with('user')->orderBy('created_at', 'desc')->get();
+    $result_ret = [];
+    for($i = 0; $i < count($result); $i++) {
+        if ($result[$i]->user_id == Auth::user()->id   ||
+        $result[$i]->user_recv_id == Auth::user()->id  )
+            array_push($result_ret, $result[$i]);
+    }
+    return view('chatusers')->with('msgs', $result_ret);
 })->middleware('auth');
 
 Route::get('/chat/projects', 'ProjectsController@list');

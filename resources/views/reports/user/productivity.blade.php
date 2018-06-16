@@ -10,17 +10,20 @@
     
     ?>
 
-    <h1>Productivity</h1>
-<button id="procent">Procent</button>
-<button id="hours">Hours</button>
-
-<br>
-<button id="month">Month</button>
-<button id="week">Week</button>
-<button id="day">Day</button>
-<br>
-Filter:
+    <h1 style="text-align:center">Productivity</h1>
+    <div class="btn-grup">
+  <h3>Change view mode</h3> 
+<button id="procent" class="btn-primary">Procent</button>
+<button id="hours" class="btn-primary">Hours</button>
+<button id="month" class="btn-info">Month</button>
+<button id="week" class="btn-info">Week</button>
+<button id="day" class="btn-info">Day</button>
+</div>
+<div class="filter-date">
+    <h3>Choose date range</h3>
 <input style="width:200px" type="text" name="daterange" />
+</div>
+<hr>
     <canvas id="myChart"></canvas>
 @endsection
 
@@ -152,7 +155,7 @@ for(let i = 0; i < monthList.length; i++)
       datasets: [{
         label: label,
         fill: false,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         data: monthDataResult
       }]
     },
@@ -203,7 +206,7 @@ function showWeek(data, days){
       datasets: [{
         label: label,
         fill: false,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         data: weekData
       }]
     },
@@ -229,7 +232,7 @@ function showDay(data, days) {
       datasets: [{
         label: label,
         data: data,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         fill: false
       }]
     },
@@ -291,7 +294,7 @@ let myChart = new Chart(ctx, {
       datasets: [{
         label: label,
         fill: false,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         data: auxData
       }]
     },

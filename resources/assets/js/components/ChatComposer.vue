@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="chat-composer">
-      <input type="text" id="chatInput" placeholder="Start typing your message..." v-model="messageText" @keyup.enter="sendMessage">
+      <input type="text" id="chatInput" placeholder="Type your message here..." v-model="messageText" @keyup.enter="sendMessage">
       <button id="sendMessage" class="btn btn-primary" @click="sendMessage">Send</button>
   </div>
 </template>

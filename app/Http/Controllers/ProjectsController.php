@@ -91,7 +91,15 @@ class ProjectsController extends Controller
             if( strpos($projects[$i]->users, '"'.auth()->user()->name.'"' ) )
                 array_push($result, $projects[$i]);
         }
-        return view('chatprojects')->with('projects', $result);
+        $result2 = \App\Message::orderBy('created_at', 'desc')->get();
+        $result_ret = [];
+        for($i = 0; $i < count($result2); $i++) {
+            foreach($result as $res) {
+                if($result2[$i]->project == $res->id)
+                    array_push($result_ret, $result2[$i]);
+            }
+        }
+        return view('chatprojects')->with('projects', $result)->with('msgs', $result_ret);
     }
 
     /**

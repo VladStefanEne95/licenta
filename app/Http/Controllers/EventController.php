@@ -23,13 +23,13 @@ class EventController extends Controller
                             null,
                             // Add color and link on event
                          [
-                             'color' => '#ff0000',
+                             'color' => '#1E9FF2',
                              'url' => '/tasks/'.strval($value->task_id),
                          ]
                         );
                     }
                 }
-                $calendar = Calendar::addEvents($events);
+                $calendar = Calendar::addEvents($events)->setOptions(['allDayDefault' => true]);
                return view('fullcalendar', compact('calendar'));
             }
     

@@ -374,7 +374,6 @@ body {
 
 .chat-window{
     text-align: left;
-    background: #f9f9f9;
 }
 .chat-left {
     border-right: 1px solid #E4E7ED;
@@ -390,7 +389,6 @@ body {
     display: inline-block;
     width: 65%;
     vertical-align: top;
-    margin-left: 20px;
 }
 .iframe {
     width: 100%;
@@ -428,6 +426,7 @@ body {
 }
 .block-user{
     padding: 1rem;
+    background: white;
 }
 .msg-time {
     display: inline-block;
@@ -461,8 +460,105 @@ body {
 .img-with-text {
     display: inline-block;
     vertical-align: top;
+    text-align: center;
 }
 .main-chat-text {
     display: inline-block;
     vertical-align: top;
+}
+
+
+.message-right {
+    text-align: left;
+    display: block;
+    padding: 6px 15px;
+    margin: 0 20px 10px 0;
+    clear: both;
+    color: #fff;
+    background-color: #1E9FF2;
+    border-radius: 4px;
+    position: relative;
+    margin-top: 5px;
+}
+.message-right::before {
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    content: '';
+    border: 5px solid transparent;
+    border-left-color: #1E9FF2;
+}
+
+.message-left {
+    text-align: left;
+    display: block;
+    padding: 6px 15px;
+    margin: 0 20px 10px 0;
+    clear: both;
+    color: #fff;
+    background-color: #1E9FF2;
+    border-radius: 4px;
+    position: relative;
+    text-align: left;
+    margin: 0 0 10px 20px;
+    margin-top: 5px;
+    color: #6B6F82;
+    background-color: #edeef0;
+}
+.message-left::before {
+    position: absolute;
+    top: 10px;
+    right: -10px;
+    width: 0;
+    height: 0;
+    content: '';
+    border: 5px solid transparent;
+    border-left-color: #1E9FF2;
+    right: auto;
+    left: -10px;
+    border-right-color: #edeef0;
+    border-left-color: transparent;
+}
+.chat-composer {
+    padding: 20px 10px;
+    background-color: #edeef0
+}
+.filter-date{
+    display: inline-block;
+    margin-left:20px;
+ 
+}
+.btn-grup {
+    display: inline-block;
+    margin-right:20px;
+}
+.users-table{
+    margin-top: 6px !important;
+    margin-bottom: 6px !important;
+    background: white;
+}
+table td,
+table th {
+    border: 1px solid #E3EBF3;
+    padding: .75rem 2rem;
+}
+.blue-table {
+    color: #1E9FF2;
+}
+.pop-rep {
+    padding: .75rem 2rem; 
+}
+
+.pop-rep:hover {
+    background: #9d9d9d;
+    cursor: pointer;
+}
+.webui-popover-content {
+    padding-left: 30px !important;
+    padding-right: 30px !important;
+}
+.glyphicon-info-sign {
+    cursor: pointer;
 }
