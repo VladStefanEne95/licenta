@@ -10,7 +10,7 @@
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+    background: #F4F5FA;
 }
 
 p {
@@ -561,4 +561,44 @@ table th {
 }
 .glyphicon-info-sign {
     cursor: pointer;
+}
+
+.task-table-text {
+    font-size:16px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.form-card {
+    background-color: #FFF;
+    box-shadow: 0 1px 15px 1px rgba(62,57,107,.07);
+    color:#6B6F82;
+    padding: 30px;
+    margin: 30px;
+}
+.form-card-2 {
+    background-color: #FFF;
+    box-shadow: 0 1px 15px 1px rgba(62,57,107,.07);
+    color:#6B6F82;
+    padding: 30px;
+    margin: 30px;
+    flex: 1;
+    width: 40%;
+    vertical-align: top;
+}
+
+.row-flex {
+    display: flex; /* equal height of the children */
+  }
+@media only screen and (min-width: 750px) {
+    .col-md-3 {
+        text-align: right;
+}
+}
+.col-md-9 {
+    margin-bottom: 20px;
+}
+
+.form-control {
+    border: 1px solid #CACFE7;
+    color: #3B4781
 }

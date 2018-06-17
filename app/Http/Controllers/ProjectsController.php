@@ -75,6 +75,16 @@ class ProjectsController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function edit($id)
+    {
+        $project = Project::find($id);
+        if(auth()->user()->name !== $project->owner){
+            return redirect('/tasks')->with('error', 'Unauthorized Page');
+        }
+                
+        return view('projects.edit')->with('project', $project);
+    }
+
     public function changeName(Request $request, $id) 
     {
         $project = Project::find($id);

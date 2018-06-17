@@ -12,14 +12,10 @@ use Carbon\Carbon;
 class TaskTimeController extends Controller
 {
     public function startTaskTime(Request $request) {
-        $time = new TaskTime;
-        $time->working_seconds = 0;
-        $time->user_id = auth()->user()->id;
-        $time->task_id = Route::input('id');
-        $time->clocked_out = 0;
-        $time->clocked_time = 0;
-        $time->pause = 0;
-        $time->save();
+        $time = DB::table('task_time')->where('user_id', Auth::user()->id)->where('task_id', Route::input('id'))->first();
+        DB::table('task_time')->where('id', $time->id)
+        ->update([ 'pause' => 0, 'updated_at' => Carbon::now()]);
+    
     }
     public function updateTaskTime(Request $request) {
         $time = DB::table('task_time')->where('user_id', Auth::user()->id)->where('task_id', Route::input('id'))->first();

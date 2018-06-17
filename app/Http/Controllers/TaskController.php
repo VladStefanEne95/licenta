@@ -27,7 +27,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-
         $tasks = Task::orderBy('id','asc')->get();
         $result = [];
         for ($i = 0; $i < count($tasks); $i++) {
@@ -40,7 +39,7 @@ class TaskController extends Controller
         }
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $col = new Collection($result);
-        $perPage = 5;
+        $perPage = 10;
         $currentPageSearchResults = $col->slice(($currentPage - 1) * $perPage, $perPage)->all();
         $entries = new LengthAwarePaginator($currentPageSearchResults, count($col), $perPage, $currentPage,['path' => LengthAwarePaginator::resolveCurrentPath()] );
         return view('tasks.index')->with('tasks', $entries);
@@ -129,7 +128,7 @@ class TaskController extends Controller
                     $taskTime->task_id = $idTask;
                     $taskTime->clocked_out = 0;
                     $taskTime->clocked_time = 0;
-                    $taskTime->pause = 0;
+                    $taskTime->pause = 1;
                     $taskTime->save();
                                  
                     Mail::send('emails.addTask', ['name' => $name, 'title' => $task->title, 'description' => $task->description, 'link' => "/tasks/$idTask/"], function ($message) use ($user)
@@ -229,8 +228,8 @@ class TaskController extends Controller
         if(auth()->user()->id !== $task->user_id){
             return redirect('/tasks')->with('error', 'Unauthorized Page');
         }
-        
-        return view('tasks.edit')->with('task', $task);
+        $projects = Project::all();        
+        return view('tasks.edit')->with('task', $task)->with('projects', $projects);
     }
 
     /**
@@ -267,6 +266,7 @@ class TaskController extends Controller
             if($task_time->user_id == auth()->user()->id &&
                 $task_time->task_id == $id) {
                 $task_time->done = 1;
+                $task_time->pause = 1;
                 $task_time->end_date = Carbon::now();
                 $task_time->save();
                 Mail::send('emails.finishTask', ['name' => auth()->user()->name, 'title' => $task->title, 'link' => "/tasks/$task->id/"], function ($message)

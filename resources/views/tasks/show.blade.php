@@ -1,38 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-
-    <a href="/tasks" class="btn btn-default">Go Back</a>
-    <h1>{{$task->title}}</h1>
-    <br><br>
-    @if($time)
-      <div id="taskTimeSpent">Time spent on this task: {{$time->working_seconds}};</div>
-      <div style="display:none !important" id="taskPause">{{$time->pause}}</div>
-    @else
-    <div id="taskTimeSpent">Time spent on this task: 0;</div>
-    <div style="display:none !important" id="taskPause">2</div>
-    @endif
-    <div>
-        {!!$task->description!!}
-        @if($task->assigned_to)
-        <h3>Assigned to:</h3>
-        <div>
-          @foreach ($task->assigned_to as $asign)
-            <p>{{$asign}}</p>
-          @endforeach
-        </div>
-        @endif 
-      @if($task->observers)
-      <h3>Observers:</h3>
-        <div>
-          @foreach ($task->observers as $asign)
-            <p>{{$asign}}</p>
-          @endforeach 
-      </div>
-      @endif
-      @if($task->checklists && $task->checklists[0] !== "notdone")
+<h1 style="text-align:center;">{{$task->title}}</h1>
+<div class="row-flex">
+<div class="form-card-2">
+  <h4>Description:</h4>
+  {!!$task->description!!}
+  
+  @if($task->checklists && $task->checklists[0] !== "notdone")
       
-      <h3>TO DO:</h3>
+      <h3>Subtasks::</h3>
         <div>
           <?php $result =""; $counter = 0;?>
         @foreach ($task->checklists as $asign)
@@ -106,12 +83,55 @@ $('#{$stripedAsign}').change(function(){
           <p>{{ floor($task->planned_time / 60)}} hours and {{$task->planned_time % 60}} minutes</p>
       </div>
       @endif
+    @if($time)
+      <div id="taskTimeSpent">Time spent on this task: {{gmdate("H:i:s",$time->working_seconds)}};</div>
+      <div style="display:none !important" id="taskPause">{{$time->pause}}</div>
+    @else
+    <div id="taskTimeSpent">Time spent on this task: 0;</div>
+    <div style="display:none !important" id="taskPause">2</div>
+    @endif
+
+    </div>
+
+  
+  
+    <div class="form-card-2">
+    <div>
+        @if($task->assigned_to)
+        <h3>Assigned to:</h3>
+        <div>
+          @foreach ($task->assigned_to as $asign)
+            <p>{{$asign}}</p>
+          @endforeach
+        </div>
+        @endif 
+      @if($task->observers)
+      <h3>Observers:</h3>
+        <div>
+          @foreach ($task->observers as $asign)
+            <p>{{$asign}}</p>
+          @endforeach 
+      </div>
+      @endif
     </div>
     <hr>
     <div>
           Deadline:  {{$task->deadline}}
     </div>
-    <hr>
+  </div>
+</div>
+
+<div class="form-card">
+    @if($task->comment)
+    <h3>Comments:</h3>
+          <div>
+          @for ($i = 0;$i < count($task->comment); $i += 2)
+            <h5>{{$task->comment[$i+1]}}: {{$task->comment[$i]}}</h5>
+            <hr class="hr" style="border-top:1px solid #999">
+          @endfor
+        </div>
+        @endif
+        <br><br>  
     @if($time)
       @if(!$time->done)  
               <button id="taskTimeBtn" type="button" class="btn btn-success" onclick="startTaskTime()" >Start time tracking</button>
@@ -120,24 +140,16 @@ $('#{$stripedAsign}').change(function(){
     @endif
     @if(!Auth::guest())
         @if(Auth::user()->id == $task->user_id)
-            <a href="/tasks/{{$task->id}}/edit" class="btn btn-default">Edit</a>
+            <a href="/tasks/{{$task->id}}/edit" class="btn btn-default">Edit task</a>
             {!!Form::open(['action' => ['TaskController@destroy', $task->id], 'method' => 'POST', 'class' => 'pull-right'])!!}
                 {{Form::hidden('_method', 'DELETE')}}
-                {{Form::submit('Delete', ['class' => 'btn btn-danger'])}}
+                {{Form::submit('Delete task', ['class' => 'btn btn-danger'])}}
             {!!Form::close()!!}
         @endif
     @endif
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommentModal">
   Add comment
 </button>
-@if($task->comment)
-  <h3>Comments:</h3>
-        <div>
-        @for ($i = 0;$i < count($task->comment); $i += 2)
-          <p>{{$task->comment[$i]}} {{$task->comment[$i+1]}}</p>
-        @endfor
-      </div>
-      @endif
     <!--modal-->
     <div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="addCommentModalTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
@@ -151,7 +163,7 @@ $('#{$stripedAsign}').change(function(){
       {!!Form::open(['action' => ['TaskController@addComment', $task->id], 'method' => 'POST', 'id' => 'formComment'])!!}
       <div class="modal-body">
         <label for="comment">Comment:</label><br>
-        <input id="comment" name="comment" type="text"></input>
+        <input class="form-control" id="comment" name="comment" type="text"></input>
         </form>
       </div>
       <div class="modal-footer">
@@ -162,7 +174,7 @@ $('#{$stripedAsign}').change(function(){
     </div>
   </div>
 </div>
-
+</div>
 @endsection
 
 @push('scripts')

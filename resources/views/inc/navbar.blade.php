@@ -54,7 +54,8 @@
                                 <li id='stop-timer2'><a href='#' onclick='pause_day()'>Pause</a></li>
                         @endif
                         <li><a href="#">Working day duation:<span id="wd-duration">{{$timer->working_seconds}}</span></a></li>
-                        </ul> 
+                        <li><a href="#" style="display:none !important"><span id="wd-pause">{{$timer->pause}}</span></a></li>
+                    </ul> 
                     </li>
 
 
