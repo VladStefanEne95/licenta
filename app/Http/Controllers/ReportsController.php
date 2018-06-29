@@ -20,11 +20,12 @@ class ReportsController extends Controller
         $user = User::find($id);
         $tasks = Task::orderBy('id','asc')->get();   
         $task_times = TaskTime::orderBy('id','asc')->get();
-
+        $result = [];
             foreach($tasks as $task){
                 foreach($task_times as $task_time){
+                    $object = new \stdClass();
                     if($task_time->user_id == $user->id &&
-                        $task_time->task_id == $task->id) {
+                        $task_time->task_id == $task->id && $task_time->done == 1) {
                             $deadline = new \DateTime($task->deadline);
                             $end_date = new \DateTime($task_time->end_date);
                             $diffrence = $deadline->diff($end_date);
@@ -32,25 +33,18 @@ class ReportsController extends Controller
                             $end_date = strtotime($task_time->end_date);
                             $late = $deadline - $end_date;
 
-                            if($late < 0) {
-                                echo $user->name;
-                                echo $task->name . " Deadline late: ";
-                                echo $diffrence->format("%a days");
-                                echo " for task $task->title";
-                                echo "<br>";
-                            }
-                            else {
-                                echo $user->name;
-                                echo $task->name . " Deadline early: ";
-                                echo $diffrence->format("%a days");
-                                echo "for task $task->title";
-                                echo "<br>";
-                            }
+                            $object->name = $user->name;
+                            $object->task = $task->title;
+                            $object->diffrence = $diffrence->format("%a days");
+                            if($late < 0)
+                            $object->late =  "Late"; 
+                            if($late > 0) 
+                                $object->late =  "Early";
+                            array_push($result, $object);
                     }
                 }
-            
-        
         }
+        return view('reports.deadline')->with('result', $result);
     }
 
 

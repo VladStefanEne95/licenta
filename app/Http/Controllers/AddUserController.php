@@ -52,7 +52,7 @@ class AddUserController extends Controller
         {
 
             $message->from('me@gmail.com', 'Ene Vlad Stefan');
-
+            $message->subject('User registration');
             $message->to($email);
 
         });

@@ -41,9 +41,10 @@
 
   
     <div class="form-card-2">
-    <h4>Tasks</h4>
+    <h4>Tasks:</h4>
     @foreach($tasks as $task)
-    <a href="/tasks/{{$task->id}}"><div>{{$task->title}} <br><small>{{$task->description}}</div></a>
+    <a href="/tasks/{{$task->id}}"><div>{{$task->title}} <br><small>{!!$task->description!!}</small></div></a>
+    <hr class="hr"><br>
     @endforeach
   </div>
 </div>

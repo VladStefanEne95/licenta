@@ -9,7 +9,7 @@
   
   @if($task->checklists && $task->checklists[0] !== "notdone")
       
-      <h3>Subtasks::</h3>
+      <h3>Subtasks:</h3>
         <div>
           <?php $result =""; $counter = 0;?>
         @foreach ($task->checklists as $asign)

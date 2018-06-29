@@ -1,13 +1,19 @@
 @extends('layouts.app')
 @section('content')
 
-<button id="month">Month</button>
-<button id="week">Week</button>
-<button id="day">Day</button>
-
-<br>
-Filter:
+<h1 style="text-align:center">Time spent on work</h1>
+<div class="btn-grup">
+<h3>Change view mode</h3> 
+<button id="month" class="btn-info">Month</button>
+<button id="week" class="btn-info">Week</button>
+<button id="day" class="btn-info">Day</button>
+</div>
+<div class="filter-date">
+<h3>Choose date range</h3>
 <input style="width:200px" type="text" name="daterange" />
+</div>
+<hr>
+
 <canvas id="myChart"></canvas>
 
 @endsection
@@ -24,16 +30,16 @@ echo "<script>let server_data = ". $js_array . ";\n</script>"
   let days = [], data = [];
   let d = new Date(server_data[0]['created_at']);
   days[0] = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + ( d.getDate()) ;
-  data[0] = server_data[0]['working_seconds'];
+  data[0] = (server_data[0]['working_seconds']/3600);
    for(let i = 1, j = 0; i < server_data.length; i++) {
     d = new Date(server_data[i]['created_at']);
     if(( d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + ( d.getDate()) ) !=  days[j]) {
       j++;
       days[j] = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + ( d.getDate()) ;
-      data[j] = server_data[i]['working_seconds'];
+      data[j] = server_data[i]['working_seconds']/3600;
     }
     else {
-      data[j] += server_data[i]['working_seconds'];
+      data[j] += server_data[i]['working_seconds']/3600;
     }
   }
  
@@ -130,10 +136,12 @@ for(let i = 0; i < monthList.length; i++)
     data: {
       labels: monthList,
       datasets: [{
-        label: "Working seconds",
+        label: "Working hours",
         fill: false,
         borderColor: 'blue',
-        data: monthDataResult
+        data: monthDataResult.map(function(each_element){
+            return Number(each_element.toFixed(2));
+      }),
       }]
     },
     options: {
@@ -182,10 +190,12 @@ function showWeek(data, days){
     data: {
       labels: weekList,
       datasets: [{
-        label: "Working seconds",
+        label: "Working hours",
         fill: false,
         borderColor: 'blue',
-        data: weekData
+        data: weekData.map(function(each_element){
+            return Number(each_element.toFixed(2));
+        }),
       }]
     },
     options: {
@@ -209,8 +219,10 @@ function showDay(data, days) {
     data: {
       labels: days,
       datasets: [{
-        label: "Working seconds",
-        data: data,
+        label: "Working hours",
+        data: data.map(function(each_element){
+            return Number(each_element.toFixed(2));
+      }),
         borderColor: 'blue',
         fill: false
       }]
@@ -266,10 +278,12 @@ let myChart = new Chart(ctx, {
     data: {
       labels: days,
       datasets: [{
-        label: "Working seconds",
+        label: "Working hours",
         fill: false,
         borderColor: 'blue',
-        data: data
+        data: data.map(function(each_element){
+            return Number(each_element.toFixed(2));
+      })
       }]
     },
 

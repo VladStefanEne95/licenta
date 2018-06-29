@@ -10,17 +10,21 @@
     
     ?>
 
-    <h1>Entertainment</h1>
-<button id="procent">Procent</button>
-<button id="hours">Hours</button>
 
-<br>
-<button id="month">Month</button>
-<button id="week">Week</button>
-<button id="day">Day</button>
-<br>
-Filter:
+<h1 style="text-align:center">Entertainment</h1>
+<div class="btn-grup">
+<h3>Change view mode</h3> 
+<button id="procent" class="btn-primary">Procent</button>
+<button id="hours" class="btn-primary">Hours</button>
+<button id="month" class="btn-info">Month</button>
+<button id="week" class="btn-info">Week</button>
+<button id="day" class="btn-info">Day</button>
+</div>
+<div class="filter-date">
+<h3>Choose date range</h3>
 <input style="width:200px" type="text" name="daterange" />
+</div>
+<hr>
     <canvas id="myChart"></canvas>
 @endsection
 

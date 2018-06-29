@@ -10,14 +10,17 @@
     
     ?>
 
-    <h1>Overview</h1>
-<button id="procent">Procent</button>
-<button id="hours">Hours</button>
 
-<br>
-
-Filter:
+<h1 style="text-align:center">Overview</h1>
+<div class="btn-grup">
+    <h3>Change view mode</h3> 
+<button class="btn-primary" id="procent">Procent</button>
+<button class="btn-primary" id="hours">Hours</button>
+</div>
+<div class="filter-date">
+<h3>Choose date range</h3>
 <input style="width:200px" type="text" name="daterange" />
+</div>
     <canvas id="myChart"></canvas>
 @endsection
 

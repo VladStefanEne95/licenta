@@ -18,7 +18,7 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $projects = Project::orderBy('id','asc')->paginate(10);
+        $projects = Project::orderBy('id','desc')->paginate(10);
         return view('projects.index')->with('projects', $projects);
     }
 
@@ -29,7 +29,10 @@ class ProjectsController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        if(auth()->user()->name == 'Vlad')
+            return view('projects.create');
+        else
+            return redirect('/projects')->with('error', 'Unauthorized access');
     }
 
     /**
@@ -42,7 +45,7 @@ class ProjectsController extends Controller
     {
         $project = new Project;
         $project->name = $request->input('name');
-        $project->description = $request->input('description');
+        $project->description = $this->stripUselessHtml($request->input('description'));
         $project->client = $request->input('client');
         $project->owner = $request->input('owner');
         $result_json = $request->input('users');
@@ -91,6 +94,19 @@ class ProjectsController extends Controller
         $project->name = $request->name;
         $project->save();
         return redirect('/projects')->with('success', 'Project Updated');
+    }
+
+    public function stripUselessHtml($string)
+    {
+        $string = str_replace("<html>", "", $string);
+        $string = str_replace("</html>", "", $string);
+        $string = str_replace("<head>", "", $string);
+        $string = str_replace("</head>", "", $string);
+        $string = str_replace("<body>", "", $string);
+        $string = str_replace("</body>", "", $string);
+        $string = str_replace("<!DOCTYPE html>", "", $string);
+
+        return $string;
     }
 
     public function list() 

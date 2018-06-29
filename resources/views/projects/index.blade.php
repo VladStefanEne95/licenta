@@ -7,14 +7,18 @@
                 <tr>
                     <th>Id</th>
                     <th>Project</th>
-                    <th>Users</th>
                     <th>Owner</th>
+                    <th>Users</th>
                     <th>Deadline</th>
                 </tr>
+
                 @foreach($projects as $project)
+                <?php
+                $project->description = str_limit($project->description, 40);
+                ?>
             <tr style="cursor:pointer" onclick="window.location.href='/projects/{{$project->id}}'">
                     <td>{{$project->id}}</td>
-                    <td class="blue-table"><div class="task-table-text">{{$project->name}} <br><small style="color:#6B6F82">{{str_limit($project->description, 40)}}</small></div> </td>
+                    <td class="blue-table"><div class="task-table-text">{{$project->name}} <br><small style="color:#6B6F82">{!!$project->description!!}</small></div> </td>
                             <td style="text-align:center"> <img class="profile-picture" src="http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png" alt=""><br><small>{{$project->owner}}</small></td>
                         <td style="text-align:center"><?php 
                         $myArray = explode(',', $project->users);

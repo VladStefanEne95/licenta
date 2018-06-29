@@ -27,7 +27,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::orderBy('id','asc')->get();
+        $tasks = Task::orderBy('id','desc')->get();
         $result = [];
         for ($i = 0; $i < count($tasks); $i++) {
             if( strpos($tasks[$i]->assigned_to, '"'.auth()->user()->name.'"' ) || 
@@ -131,9 +131,10 @@ class TaskController extends Controller
                     $taskTime->pause = 1;
                     $taskTime->save();
                                  
-                    Mail::send('emails.addTask', ['name' => $name, 'title' => $task->title, 'description' => $task->description, 'link' => "/tasks/$idTask/"], function ($message) use ($user)
+                    Mail::send('emails.addTask', ['name' => $name,'deadline'=> $task->deadline , 'title' => $task->title, 'description' => $task->description, 'link' => "/tasks/$idTask/"], function ($message) use ($user)
                     {
                         $message->from('me@gmail.com', 'Ene Vlad Stefan');
+                        $message->subject('New task');
                         $message->to($user->email);
                         
                     });
@@ -189,6 +190,16 @@ class TaskController extends Controller
         $task->observers = json_decode($task->observers);
         $task->checklists = json_decode($task->checklists);
         $task->comment = json_decode($task->comment);
+        $isGood = 0;
+        if(($task->user_id != auth()->user()->id)){
+            for($i = 0; $i < count($task->assigned_to); $i++) {
+                if($task->assigned_to[($i)] == auth()->user()->name ||
+                    substr($task->assigned_to[($i)], 1) == auth()->user()->name)
+                        $isGood = 1;
+            }
+            if ($isGood == 0 )
+                return redirect('/tasks')->with('error', 'Unauthorized access');
+        }
         
         if($time)
             return view('tasks.show')->with('task', $task)->with('time', $time);
@@ -269,9 +280,10 @@ class TaskController extends Controller
                 $task_time->pause = 1;
                 $task_time->end_date = Carbon::now();
                 $task_time->save();
-                Mail::send('emails.finishTask', ['name' => auth()->user()->name, 'title' => $task->title, 'link' => "/tasks/$task->id/"], function ($message)
+                Mail::send('emails.finishTask', ['name' => auth()->user()->name, 'deadline'=> $task->deadline ,'title' => $task->title, 'link' => "/tasks/$task->id/"], function ($message)
                 {
                     $message->from('me@gmail.com', 'Ene Vlad Stefan');
+                    $message->subject('New task');
                     $message->to('adminemail@gmail.com');
                     
                 });

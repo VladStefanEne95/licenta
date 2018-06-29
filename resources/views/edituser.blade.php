@@ -6,7 +6,7 @@
             {{Form::label('apikey', 'Api Key')}}
             {{Form::text('apikey', '', ['class' => 'form-control', 'placeholder' => 'RescueTime api key'])}}
         </div>
-        <input name="userId" type="text" value={{$user->id}}>
+        <input style="display:none !important;" name="userId" type="text" value={{$user->id}}>
         {{Form::submit('Submit', ['class'=>'btn btn-primary'])}}
     {!! Form::close() !!}
 @endsection

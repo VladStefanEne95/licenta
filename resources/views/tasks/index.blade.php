@@ -14,7 +14,7 @@
         @foreach($tasks as $task)
         <tr style="cursor:pointer" onclick="window.location.href='/tasks/{{$task->id}}'">
                 <td>{{$task->id}}</td>
-                <td class="blue-table"><div class="task-table-text">{{$task->title}} <br><small style="color:#6B6F82">{{str_limit($task->description, 40)}}</small></div> </td>
+                <td class="blue-table"><div class="task-table-text">{{$task->title}} <br><small style="color:#6B6F82">{!!str_limit($task->description, 40)!!}</small></div> </td>
                 @if($task->priority == 0)
                     <td ><span style="color:white; background:#1E9FF2; padding:3px;border-radius:4px">Low</span></td>
                 @elseif($task->priority == 1)
