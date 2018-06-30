@@ -2,6 +2,18 @@ let timer_seconds;
 let timer;
 let pause_work = 0;
 
+function hmsToSecondsOnly(str) {
+    var p = str.split(':'),
+        s = 0, m = 1;
+
+    while (p.length > 0) {
+        s += m * parseInt(p.pop(), 10);
+        m *= 60;
+    }
+
+    return s;
+}
+
 $( document ).ready(function() {
     timer_seconds = $("#wd-duration").text();
     pause_work = $('#wd-pause').text();
@@ -48,11 +60,13 @@ window.onbeforeunload = closingCode;
 function closingCode(){
     if ($('#taskTimeBtn').text === "Stop time tracking") {
         let aux = window.location.href + "/update-task-time";
-        let aux = aux.replace("#", "");
+        aux = aux.replace("#", "");
         $.get(window.location.href + "/update-task-time", {time: task_timer_seconds, pause : 1});
     }
-    if(timer_seconds != 0)
+    if(timer_seconds != 0) {
+        alert("aici");
         $.get("/add-pause", {time: timer_seconds, pause: pause_work});
+    }
    return null;
 }
 
@@ -67,8 +81,8 @@ function myTaskTimer() {
 }
 
 $( document ).ready(function() {
-    if($('#taskTimeSpent').text() !== "Time spent on this task: 00:00:00;"){
-        task_timer_seconds = Number($('#taskTimeSpent').text().replace(/\D/g,''));
+    if($('#taskTimeSpent').text() !== "Time spent on this task: 00:00:00"){
+        task_timer_seconds = hmsToSecondsOnly($('#taskTimeSpent').text().replace('Time spent on this task: ', ''));
         if($('#taskPause').text() == "0") {
             continueTaskTime();
         }

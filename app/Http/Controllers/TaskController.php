@@ -145,10 +145,19 @@ class TaskController extends Controller
         $task->save();
 
         $event = new Event;
+        $eventUsers = [];
+        foreach($users as $user) {
+            foreach($names as $name) {
+                if(strcmp(trim($name), $user->name) == 0) {
+                  array_push($eventUsers, $user->id);
+                }
+            }
+        }
+        array_push($eventUsers, Auth::user()->id);
         $event->title = $request->input('title');
         $event->start_date = Carbon::now();
         $event->end_date = $request->input('deadline');
-        $event->user_id = Auth::user()->id;
+        $event->user_id = implode(" ", $eventUsers);
         $event->task_id = $idTask;
         $event->save();
         

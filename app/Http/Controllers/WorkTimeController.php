@@ -30,5 +30,6 @@ class WorkTimeController extends Controller
         ->orderBy('id', 'desc')->first();
         DB::table('worktime')->where('id', $time->id)
         ->update(['working_seconds' => $request->input('time'), 'pause' => $request->input('pause'), 'updated_at' => Carbon::now()]);
+        return $request->input('pause');
     }
 }

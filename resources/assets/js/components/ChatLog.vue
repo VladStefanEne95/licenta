@@ -1,6 +1,6 @@
 <template lang="html">
   <div id="chat-log" class="chat-log">
-      <chat-message v-for="message in messages" :key="message.id" :currentUser="currentUser" :message="message"></chat-message>
+      <chat-message v-for="message in messages" :key="message.id" :otherUser="otherUser" :currentUser="currentUser" :message="message"></chat-message>
       <div class="empty" v-show="messages.length === 0">
           Nothing here yet!
       </div>
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    props: {messages:Array, currentUser:String}
+    props: {messages:Array, currentUser:String, otherUser:String}
 }
 </script>
 

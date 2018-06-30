@@ -19,7 +19,7 @@ $(function() {
             let sizeArr = availableTags.length;
             let result = []
             for (let i = 0; i < sizeArr; i++) {
-                if (availableTags[i].toLowerCase().indexOf(extractLast( request.term )) !== -1){
+                if (availableTags[i].toLowerCase().indexOf(extractLast( request.term.toLowerCase() )) !== -1){
                     result.push(availableTags[i])
                 }
             }
@@ -94,7 +94,7 @@ $(function() {
             let sizeArr = availableTags.length;
             let result = []
             for (let i = 0; i < sizeArr; i++) {
-                if (availableTags[i].toLowerCase().indexOf(extractLast( request.term )) !== -1){
+                if (availableTags[i].toLowerCase().indexOf(extractLast( request.term.toLowerCase() )) !== -1){
                     result.push(availableTags[i])
                 }
             }

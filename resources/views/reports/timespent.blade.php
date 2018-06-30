@@ -28,11 +28,11 @@ echo "<script>let data = ". $js_array . ";\n</script>"
       data: {
         labels: taskNames,
         datasets: [{
-          label: 'Estimated time',
+          label: 'Estimated time(minutes)',
           data: estimated,
           backgroundColor: "rgba(153,255,51,1)"
         }, {
-          label: 'Real time',
+          label: 'Real time(minutes)',
           data: real,
           backgroundColor: "rgba(255,153,0,1)"
         }]

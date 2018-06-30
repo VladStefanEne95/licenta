@@ -1,7 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
-<h1 style="text-align:center;">{{$task->title}}</h1>
+<h1 style="text-align:center;">{{$task->title}}
+  @if($time)
+  @if($time->done) 
+        <small>(finished)</small>
+  @endif
+  @endif
+
+
+</h1>
 <div class="row-flex">
 <div class="form-card-2">
   <h4>Description:</h4>
@@ -84,10 +92,10 @@ $('#{$stripedAsign}').change(function(){
       </div>
       @endif
     @if($time)
-      <div id="taskTimeSpent">Time spent on this task: {{gmdate("H:i:s",$time->working_seconds)}};</div>
+      <div id="taskTimeSpent">Time spent on this task: {{gmdate("H:i:s",$time->working_seconds)}}</div>
       <div style="display:none !important" id="taskPause">{{$time->pause}}</div>
     @else
-    <div id="taskTimeSpent">Time spent on this task: 0;</div>
+    <div id="taskTimeSpent">Time spent on this task: 0</div>
     <div style="display:none !important" id="taskPause">2</div>
     @endif
 

@@ -1454,6 +1454,7 @@ var app = new Vue({
         }).listen('MessagePosted', function (e) {
             _this.messages.push({
                 message: e.message.message,
+                user_recv_id: e.message.user_recv_id,
                 user: e.user
             });
             msg = 1;
@@ -48619,7 +48620,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: { message: Object, currentUser: String }
+    props: { message: Object, currentUser: String, otherUser: String }
 });
 
 /***/ }),
@@ -48630,49 +48631,54 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "chat-message" }, [
-    _vm.currentUser == _vm.message.user.name
-      ? _c("div", { staticClass: "user-right" }, [
-          _c("div", { staticClass: "main-chat-text" }, [
-            _c("p", { staticClass: "message-right" }, [
-              _vm._v(_vm._s(_vm.message.message))
+  return _vm.currentUser == _vm.message.user.name ||
+    _vm.otherUser == _vm.message.user_recv_id
+    ? _c("div", { staticClass: "chat-message" }, [
+        _vm.currentUser == _vm.message.user.name
+          ? _c("div", { staticClass: "user-right" }, [
+              _c("div", { staticClass: "main-chat-text" }, [
+                _c("p", { staticClass: "message-right" }, [
+                  _vm._v(_vm._s(_vm.message.message))
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "img-with-text" }, [
+                _c("img", {
+                  staticStyle: { width: "40px", height: "40px" },
+                  attrs: {
+                    src:
+                      "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
+                  }
+                }),
+                _vm._v(" "),
+                _c("br"),
+                _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "img-with-text" }, [
-            _c("img", {
-              staticStyle: { width: "40px", height: "40px" },
-              attrs: {
-                src:
-                  "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
-              }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
-          ])
-        ])
-      : _c("div", { staticClass: "user-left" }, [
-          _c("div", { staticClass: "img-with-text" }, [
-            _c("img", {
-              staticStyle: { width: "40px", height: "40px" },
-              attrs: {
-                src:
-                  "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
-              }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "main-chat-text" }, [
-            _c("p", { staticClass: "message-left" }, [
-              _vm._v(_vm._s(_vm.message.message))
-            ])
-          ])
-        ])
-  ])
+          : _vm.otherUser == _vm.message.user_recv_id
+            ? _c("div", { staticClass: "user-left" }, [
+                _c("div", { staticClass: "img-with-text" }, [
+                  _c("img", {
+                    staticStyle: { width: "40px", height: "40px" },
+                    attrs: {
+                      src:
+                        "http://www.clker.com/cliparts/B/R/Y/m/P/e/blank-profile-md.png"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("br"),
+                  _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "main-chat-text" }, [
+                  _c("p", { staticClass: "message-left" }, [
+                    _vm._v(_vm._s(_vm.message.message))
+                  ])
+                ])
+              ])
+            : _vm._e()
+      ])
+    : _vm._e()
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -48792,7 +48798,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: { messages: Array, currentUser: String }
+    props: { messages: Array, currentUser: String, otherUser: String }
 });
 
 /***/ }),
@@ -48810,7 +48816,11 @@ var render = function() {
       _vm._l(_vm.messages, function(message) {
         return _c("chat-message", {
           key: message.id,
-          attrs: { currentUser: _vm.currentUser, message: message }
+          attrs: {
+            otherUser: _vm.otherUser,
+            currentUser: _vm.currentUser,
+            message: message
+          }
         })
       }),
       _vm._v(" "),

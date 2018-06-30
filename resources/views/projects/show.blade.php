@@ -14,10 +14,10 @@
 
 <div class="row-flex">
 <div class="form-card-2">
-  <h4>Description</h4>
+  <h4>Description:</h4>
   {!!$project->description!!}
   <div>
-        <h4>Deadline</h4>  {{$project->deadline}}
+        <h4>Deadline:</h4>  {{$project->deadline}}
   </div>
   <div>
         @if($project->users)
@@ -33,10 +33,14 @@
         ?>
         @endif 
     </div>
-  <h4>Cient</h4>
+    @if($project->client)
+  <h4>Cient:</h4>
+  @endif
   {{$project->client}}
-  <h4>Owner</h4>
+  @if($project->owner)
+  <h4>Owner:</h4>
   {{$project->owner}}
+  @endif
     </div>
 
   

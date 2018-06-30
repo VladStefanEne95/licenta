@@ -420,7 +420,8 @@ body {
 .list-group-item-heading {
     text-align: left;
     display: inline-block;
-    margin-left:10px;
+    margin-left:15px;
+    margin-top:5px;
     width: 30%;
     vertical-align: top;
 }

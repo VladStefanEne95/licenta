@@ -15,18 +15,36 @@ class EventController extends Controller
                 if($data->count()) {
                     foreach ($data as $key => $value) {
                         if($value->user_id == Auth::user()->id)
-                        $events[] = Calendar::event(
-                            $value->title,
-                            true,
-                            new \DateTime($value->start_date),
-                            new \DateTime($value->end_date.' +1 day'),
-                            null,
-                            // Add color and link on event
-                         [
-                             'color' => '#1E9FF2',
-                             'url' => '/tasks/'.strval($value->task_id),
-                         ]
-                        );
+                            $events[] = Calendar::event(
+                                $value->title,
+                                true,
+                                new \DateTime($value->start_date),
+                                new \DateTime($value->end_date.' +1 day'),
+                                null,
+                                // Add color and link on event
+                            [
+                                'color' => '#1E9FF2',
+                                'url' =>  $value->task_id ? '/tasks/'.strval($value->task_id): NULL
+                            ]
+                            );
+                                else {
+                                $eventsArr = explode(" ", $value->user_id);
+                                foreach ($eventsArr as $ev) {
+                                    if($ev == Auth::user()->id)
+                                    $events[] = Calendar::event(
+                                        $value->title,
+                                        true,
+                                        new \DateTime($value->start_date),
+                                        new \DateTime($value->end_date.' +1 day'),
+                                        null,
+                                        // Add color and link on event
+                                    [
+                                        'color' => '#1E9FF2',
+                                        'url' =>  $value->task_id ? '/tasks/'.strval($value->task_id): NULL
+                                    ]
+                                    );  
+                                }
+                            }
                     }
                 }
                 $calendar = Calendar::addEvents($events)->setOptions(['allDayDefault' => true]);

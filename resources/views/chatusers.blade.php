@@ -56,10 +56,15 @@
         
         </div>
     </div>
-
+    @if(isset($counter))
     <div class="chat-right">
         <iframe id="iframe" class="iframe" src={{$link}} frameborder="0"></iframe>            
     </div>
+    @else
+    <div class="chat-right">
+        <iframe id="iframe" class="iframe" frameborder="0"></iframe>            
+    </div>
+    @endif
 </div>
 
 @endsection

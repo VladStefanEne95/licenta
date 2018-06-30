@@ -32,8 +32,13 @@
     </style>        
 </head>
 <body>
+    @foreach($users as $user)
+        @if(substr(Request::url(), strrpos(Request::url(), "/") + 1) == $user->id)
+            <?php $otherUser = $user->id; ?>
+        @endif
+    @endforeach
         <div id="app">
-            <chat-log :messages="messages" current-user="{{ Auth::user()->name }}"></chat-log>
+        <chat-log :messages="messages" current-user="{{ Auth::user()->name }}" other-user="{{ Auth::user()->id }}"></chat-log>
             <chat-composer current-user="{{ Auth::user()->name }}" v-on:messageSent="addMessage"></chat-composer>
         </div>
 

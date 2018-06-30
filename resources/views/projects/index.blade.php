@@ -14,7 +14,7 @@
 
                 @foreach($projects as $project)
                 <?php
-                $project->description = str_limit($project->description, 40);
+                $project->description = str_limit(strip_tags($project->description), 40);
                 ?>
             <tr style="cursor:pointer" onclick="window.location.href='/projects/{{$project->id}}'">
                     <td>{{$project->id}}</td>
