@@ -331,7 +331,24 @@ $('#compare').click(function() {
 });
 
 function showCompare() {
+  if (chartType == 1) {
       myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ["Productivity", "Social Media", "Enterteinment", "Other"],
+        datasets: [{
+          label: 'Angajat',
+          data: [auxProd, auxSocial, auxEnt, auxOther],
+          backgroundColor: "rgba(153,255,51,1)"
+        }, {
+          label: 'Media',
+          data: [totalProd/{{count($users)}}, totalSocial/{{count($users)}}, totalEnt/{{count($users)}}, totalOther/{{count($users)}}],
+          backgroundColor: "rgba(255,153,0,1)"
+        }]
+      }
+    });
+  } else {
+    myChart = new Chart(ctx, {
       type: 'bar',
       data: {
         labels: ["Productivity", "Social Media", "Enterteinment", "Other"],
@@ -346,6 +363,7 @@ function showCompare() {
         }]
       }
     });
+  }
 }
 </script>
 @endsection

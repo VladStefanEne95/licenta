@@ -1455,6 +1455,7 @@ var app = new Vue({
             _this.messages.push({
                 message: e.message.message,
                 user_recv_id: e.message.user_recv_id,
+                user_id: e.message.user_id,
                 user: e.user
             });
             msg = 1;
@@ -48618,9 +48619,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: { message: Object, currentUser: String, otherUser: String }
+    props: { message: Object, currentUser: String, otherUser: String, auxId: String }
 });
 
 /***/ }),
@@ -48632,7 +48634,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _vm.currentUser == _vm.message.user.name ||
-    _vm.otherUser == _vm.message.user_recv_id
+    (_vm.otherUser == _vm.message.user_recv_id &&
+      _vm.auxId == _vm.message.user_id)
     ? _c("div", { staticClass: "chat-message" }, [
         _vm.currentUser == _vm.message.user.name
           ? _c("div", { staticClass: "user-right" }, [
@@ -48655,7 +48658,8 @@ var render = function() {
                 _c("small", [_vm._v(_vm._s(_vm.message.user.name))])
               ])
             ])
-          : _vm.otherUser == _vm.message.user_recv_id
+          : _vm.otherUser == _vm.message.user_recv_id &&
+            _vm.auxId == _vm.message.user_id
             ? _c("div", { staticClass: "user-left" }, [
                 _c("div", { staticClass: "img-with-text" }, [
                   _c("img", {
@@ -48798,7 +48802,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: { messages: Array, currentUser: String, otherUser: String }
+    props: { messages: Array, currentUser: String, otherUser: String, auxId: String }
 });
 
 /***/ }),
@@ -48817,6 +48821,7 @@ var render = function() {
         return _c("chat-message", {
           key: message.id,
           attrs: {
+            auxId: _vm.auxId,
             otherUser: _vm.otherUser,
             currentUser: _vm.currentUser,
             message: message

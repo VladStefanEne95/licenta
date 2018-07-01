@@ -148,6 +148,7 @@ let monthDataResult = [];
 for(let i = 0; i < monthList.length; i++)
   monthDataResult[i] = (monthData[monthList[i]]/monthCounter[monthList[i]]).toFixed(2);
 
+
   myChart = new Chart(ctx, {
     type: 'line',
     data: {

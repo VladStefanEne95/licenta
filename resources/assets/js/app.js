@@ -66,6 +66,7 @@ const app = new Vue({
                 this.messages.push({
                     message: e.message.message,
                     user_recv_id: e.message.user_recv_id,
+                    user_id: e.message.user_id,
                     user: e.user
                 });
                 msg = 1;

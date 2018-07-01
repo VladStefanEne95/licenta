@@ -139,9 +139,8 @@ for(let i = 0; i < monthList.length; i++)
         label: "Working hours",
         fill: false,
         borderColor: 'blue',
-        data: monthDataResult.map(function(each_element){
-            return Number(each_element.toFixed(2));
-      }),
+        backgroundColor: "#e8c3b9",
+        data: monthDataResult
       }]
     },
     options: {
@@ -193,9 +192,8 @@ function showWeek(data, days){
         label: "Working hours",
         fill: false,
         borderColor: 'blue',
-        data: weekData.map(function(each_element){
-            return Number(each_element.toFixed(2));
-        }),
+        backgroundColor: "#e8c3b9",
+        data: weekData
       }]
     },
     options: {
@@ -224,6 +222,7 @@ function showDay(data, days) {
             return Number(each_element.toFixed(2));
       }),
         borderColor: 'blue',
+        backgroundColor: "#e8c3b9",
         fill: false
       }]
     },
@@ -281,6 +280,7 @@ let myChart = new Chart(ctx, {
         label: "Working hours",
         fill: false,
         borderColor: 'blue',
+        backgroundColor: "#e8c3b9",
         data: data.map(function(each_element){
             return Number(each_element.toFixed(2));
       })

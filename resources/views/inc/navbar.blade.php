@@ -27,8 +27,6 @@
     
                 <ul class="nav navbar-nav">
                   <li><a href="/">Home</a></li>
-                  <li><a href="#">Lorem</a></li>
-                  <li><a href="#">Ipsum</a></li>
                 </ul>
                 
                 <!-- Right Side Of Navbar -->

@@ -159,7 +159,7 @@ for(let i = 0; i < monthList.length; i++)
       datasets: [{
         label: label,
         fill: false,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         data: monthDataResult
       }]
     },
@@ -211,7 +211,7 @@ function showWeek(data, days){
       datasets: [{
         label: label,
         fill: false,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         data: weekData
       }]
     },
@@ -237,7 +237,7 @@ function showDay(data, days) {
       datasets: [{
         label: label,
         data: data,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         fill: false
       }]
     },
@@ -300,7 +300,7 @@ let myChart = new Chart(ctx, {
       datasets: [{
         label: label,
         fill: false,
-        borderColor: 'blue',
+        borderColor: '#3cba9f',
         data: auxData
       }]
     },

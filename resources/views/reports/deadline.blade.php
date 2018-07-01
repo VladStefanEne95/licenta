@@ -1,6 +1,7 @@
 @extends('layouts.app')
 @section('content')
 
+@if($result)
 <h1>{{$result[0]->name}}</h1>
 <table class="users-table">
     <tr>
@@ -19,6 +20,8 @@
             ?>
     </tr>    
 @endforeach  
-
+@else
+<h1>No tasks finished.</h1>
+@endif
 </table>
 @endsection

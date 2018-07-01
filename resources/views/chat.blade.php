@@ -38,7 +38,7 @@
         @endif
     @endforeach
         <div id="app">
-        <chat-log :messages="messages" current-user="{{ Auth::user()->name }}" other-user="{{ Auth::user()->id }}"></chat-log>
+        <chat-log :messages="messages" aux-id={{$otherUser}} current-user="{{ Auth::user()->name }}" other-user="{{ Auth::user()->id }}"></chat-log>
             <chat-composer current-user="{{ Auth::user()->name }}" v-on:messageSent="addMessage"></chat-composer>
         </div>
 

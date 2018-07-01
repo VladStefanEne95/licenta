@@ -34,11 +34,11 @@ class GetTimeDataController extends Controller
                 $resc->procent_social_media = $aux->percent;
                 $resc->social_media = $aux->value;
                 
-                $aux = $this->getDailySocialMedia($user->id);
+                $aux = $this->getDailyEntertainment($user->id);
                 $resc->procent_entertainment = $aux->percent;
                 $resc->entertainment = $aux->value;
                 
-                $aux = $this->getDailySocialMedia($user->id);
+                $aux = $this->getDailyTimeOnWorkPc($user->id);
                 $resc->procent_time_pc = $aux->percent;
                 $resc->time_pc = $aux->value;
 
