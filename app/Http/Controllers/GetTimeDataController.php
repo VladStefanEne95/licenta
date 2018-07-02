@@ -45,6 +45,7 @@ class GetTimeDataController extends Controller
                 $resc->day = $aux->date;
 
                 $resc->save();
+                echo $resc;
                 break;
             }
         }

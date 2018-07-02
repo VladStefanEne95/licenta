@@ -1,6 +1,6 @@
 <nav id="sidebar">
                 <div class="sidebar-header">
-                    <h3>Logo</h3>
+                    <a href="/"><img src="/tech-logo-vlad.png" alt="LOGO" style="max-width:70px;"></a>
                 </div>
 
                 <ul class="list-unstyled components">

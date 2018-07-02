@@ -26,7 +26,7 @@
                 </ul>
     
                 <ul class="nav navbar-nav">
-                  <li><a href="/">Home</a></li>
+                  <li></li>
                 </ul>
                 
                 <!-- Right Side Of Navbar -->

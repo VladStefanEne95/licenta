@@ -99,7 +99,7 @@ Route::get('/chat/users/{id}', function () {
 })->middleware('auth');
 
 Route::get('/chat/projects/{id}', function () {
-    return view('chat');
+    return view('chat2');
 })->middleware('auth');
 
 Route::get('/messages/{id}', function ($id) {

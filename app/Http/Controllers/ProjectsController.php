@@ -47,7 +47,7 @@ class ProjectsController extends Controller
         $project->name = $request->input('name');
         $project->description = $this->stripUselessHtml($request->input('description'));
         $project->client = $request->input('client');
-        $project->owner = $request->input('owner');
+        $project->owner = 1;
         $result_json = $request->input('users');
         $result_json = json_encode( explode(",", $result_json ));
         $project->users = $result_json;
@@ -81,7 +81,7 @@ class ProjectsController extends Controller
     public function edit($id)
     {
         $project = Project::find($id);
-        if(auth()->user()->name !== $project->owner){
+        if(auth()->user()->id !== $project->owner){
             return redirect('/tasks')->with('error', 'Unauthorized Page');
         }
                 
@@ -114,7 +114,7 @@ class ProjectsController extends Controller
         $projects = Project::orderBy('id','asc')->get();
         $result = [];
         for ($i = 0; $i < count($projects); $i++) {
-            if( strpos($projects[$i]->users, '"'.auth()->user()->name.'"' ) )
+            if( strpos($projects[$i]->users, '"'.auth()->user()->name.'"' ) ||strpos($projects[$i]->users, '" '.auth()->user()->name.'"' ))
                 array_push($result, $projects[$i]);
         }
         $result2 = \App\Message::orderBy('created_at', 'desc')->get();

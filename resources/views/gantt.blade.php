@@ -9,7 +9,7 @@ gantt.config.xml_date = "%Y-%m-%d %H:%i:%s";
 gantt.config.order_branch = true;
 gantt.config.order_branch_free = true;
  
-gantt.init("gantt_here", new Date(2018,5,1), new Date(2018,7,1));
+gantt.init("gantt_here", new Date(2018,6,1), new Date(2018,7,1));
  
 gantt.load("/api/data");
  

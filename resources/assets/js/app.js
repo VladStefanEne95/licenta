@@ -16,8 +16,11 @@ window.Vue = require('vue');
  */
 Vue.component('example', require('./components/Example.vue'));
 Vue.component('chat-message', require('./components/ChatMessage.vue'));
+Vue.component('chat-message2', require('./components/ChatMessage2.vue'));
+Vue.component('chat-log2', require('./components/ChatLog2.vue'));
 Vue.component('chat-log', require('./components/ChatLog.vue'));
 Vue.component('chat-composer', require('./components/ChatComposer.vue'));
+Vue.component('chat-composer2', require('./components/ChatComposer2.vue'));
 const app = new Vue({
     el: '#app',
     data: {
@@ -67,7 +70,8 @@ const app = new Vue({
                     message: e.message.message,
                     user_recv_id: e.message.user_recv_id,
                     user_id: e.message.user_id,
-                    user: e.user
+                    user: e.user,
+                    project: e.message.project
                 });
                 msg = 1;
             });
